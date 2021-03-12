@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/screens/coin_screen.dart';
+import '../coin.dart';
 import '../theme.dart';
 
 class CurrencyCard extends StatelessWidget {
   const CurrencyCard({
     Key key,
     @required this.balance,
-    @required this.currentCryptoFullName,
-    @required this.currentCrypto,
-    @required this.currentValue,
-    @required this.selectedCurrency,
+    @required this.coin
   }) : super(key: key);
 
   final double balance;
-  final String currentCryptoFullName;
-  final String currentCrypto;
-  final double currentValue;
-  final String selectedCurrency;
+  final Coin coin;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +23,7 @@ class CurrencyCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => CoinScreen(
-                coinName: currentCryptoFullName,
+                coin: coin,
               ),
             ),
           );
@@ -42,9 +37,9 @@ class CurrencyCard extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
             child: Text(
-              currentValue == 0
+              coin == null
                   ? 'Loading...'
-                  : '$balance $currentCrypto = \$${(currentValue * balance * 10000).toInt().toDouble() / 10000}',
+                  : '$balance ${coin.symbol.toUpperCase()} = \$${(coin.price * balance * 10000).toInt().toDouble() / 10000}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20.0,

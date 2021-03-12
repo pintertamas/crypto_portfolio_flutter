@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_homework/coin_chart_data.dart';
 import 'package:flutter_homework/theme.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import '../coin.dart';
 
 class CoinScreen extends StatefulWidget {
-  const CoinScreen({this.coinName});
+  const CoinScreen({this.coin});
 
-  final String coinName;
+  final Coin coin;
 
   @override
-  _CoinScreenState createState() => _CoinScreenState(coinName);
+  _CoinScreenState createState() => _CoinScreenState(coin);
 }
 
 class _CoinScreenState extends State<CoinScreen> {
-  String coinName;
+  Coin coin;
 
-  _CoinScreenState(this.coinName) {
-    this.coinName = coinName;
+  _CoinScreenState(this.coin) {
+    this.coin = coin;
   }
 
   CoinChartData coinValues = new CoinChartData();
@@ -27,7 +28,7 @@ class _CoinScreenState extends State<CoinScreen> {
   void getData() async {
     isWaiting = true;
     try {
-      coinValues = await fetchCoinChartData(coinName);
+      coinValues = await fetchCoinChartData(coin.id);
       print("data loaded");
 
       isWaiting = false;
@@ -49,7 +50,7 @@ class _CoinScreenState extends State<CoinScreen> {
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
-        title: Text('$coinName'),
+        title: Text('${coin.name}'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

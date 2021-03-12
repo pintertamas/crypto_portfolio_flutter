@@ -3,6 +3,7 @@ import 'package:flutter_homework/constants.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
 import 'package:intl/intl.dart';
 import '../calculate_balance.dart';
+import '../coin.dart';
 import '../theme.dart';
 import '../coin_data.dart';
 import '../widgets/currency_card.dart';
@@ -20,7 +21,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   void getData() async {
     isWaiting = true;
     try {
-      coinValues = await fetchCoinData();
+      portfolio.keys.forEach((element) async {
+        await fetchCoinData(element).then((value) => coinValues.data[element] = value);
+        setState(() {});
+        setState(() {});
+      });
       print("data loaded");
 
       isWaiting = false;
@@ -46,7 +51,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Portfolio balance'),
-            Text(calculateBalance(coinValues, portfolio) == 0 ? 'Loading...' : '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency'),
+            Text(coinValues.data.isEmpty ? 'Loading...' : '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency'),
           ],
         ),
       ),
@@ -72,24 +77,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                           flex: 1,
                           child: LogoWidget(
                             isWaiting: isWaiting,
-                            coinValues: coinValues,
-                            coinName: coinName,
+                            coin: coinValues.data[coinName],
                           ),
                         ),
                         Expanded(
                           flex: 8,
                           child: CurrencyCard(
                             balance: portfolio[coinName],
-                            currentCryptoFullName: isWaiting == true ||
-                                    coinValues.data[coinName] == null
-                                ? "Loading..."
-                                : coinValues.data[coinName].name,
-                            currentCrypto: coinName,
-                            currentValue: isWaiting == true ||
-                                    coinValues.data[coinName] == null
-                                ? 0
-                                : coinValues.data[coinName].price,
-                            selectedCurrency: selectedCurrency,
+                            coin: coinValues.data[coinName],
                           ),
                         ),
                       ],

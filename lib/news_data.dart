@@ -35,7 +35,6 @@ Future<NewsData> fetchNewsData() async {
   final response = await http.get(
     Uri.https(coinGeckoSite, '/api/v3/status_updates'),
   );
-  print(response.request);
 
   if (response.statusCode == 200) {
     print(response.request);
