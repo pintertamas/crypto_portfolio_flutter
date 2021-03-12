@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_homework/screens/coin_screen.dart';
 
 class CurrencyCard extends StatelessWidget {
   const CurrencyCard({
     Key key,
     @required this.balance,
+    @required this.currentCryptoFullName,
     @required this.currentCrypto,
     @required this.currentValue,
     @required this.selectedCurrency,
   }) : super(key: key);
 
   final double balance;
+  final String currentCryptoFullName;
   final String currentCrypto;
   final double currentValue;
   final String selectedCurrency;
@@ -20,7 +23,14 @@ class CurrencyCard extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 0),
       child: GestureDetector(
         onTap: () {
-
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CoinScreen(
+                coinName: currentCryptoFullName,
+              ),
+            ),
+          );
         },
         child: Card(
           color: Colors.deepOrange,

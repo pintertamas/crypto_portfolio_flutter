@@ -14,9 +14,11 @@ class CoinData {
       portfolio.forEach((key, value) {
         if (key == json['data'][i]['symbol']) {
           String coinSymbol = json['data'][i]['symbol'];
+          String coinName = json['data'][i]['name'];
+          print(coinName);
           int coinId = json['data'][i]['id'];
           double coinPrice = json['data'][i]['quote']['USD']['price'];
-          res.data[coinSymbol] = Coin(coinId, coinSymbol, coinPrice);
+          res.data[coinSymbol] = Coin(coinId, coinSymbol, coinPrice, coinName);
         }
       });
     }

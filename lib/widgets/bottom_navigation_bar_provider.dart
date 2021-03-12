@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/screens/coin_screen.dart';
+import 'package:flutter_homework/screens/news_screen.dart';
 import 'package:flutter_homework/screens/portfolio_screen.dart';
 import 'package:flutter_homework/screens/settings_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,7 +15,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState
     extends State<BottomNavBar> {
   var currentTab = [
-    CoinScreen(),
+    NewsScreen(),
     PortfolioScreen(),
     SettingsScreen(),
   ];
@@ -43,8 +43,8 @@ class _BottomNavBarState
         },
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(FontAwesomeIcons.home),
-            label: 'Home',
+            icon: new Icon(FontAwesomeIcons.newspaper),
+            label: 'News',
           ),
           BottomNavigationBarItem(
             icon: new Icon(FontAwesomeIcons.chartLine),

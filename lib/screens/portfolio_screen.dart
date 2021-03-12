@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/coin_chart_data.dart';
 import 'package:flutter_homework/constants.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
 import '../widgets/balance_widget.dart';
@@ -22,7 +21,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     try {
       coinValues = await fetchCoinData();
       print("data loaded");
-      fetchCoinChartData("Bitcoin", "USD");
 
       isWaiting = false;
 
@@ -72,6 +70,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                         flex: 8,
                         child: CurrencyCard(
                           balance: portfolio[coinName],
+                          currentCryptoFullName: isWaiting == true ||
+                                  coinValues.data[coinName] == null
+                              ? "Loading..."
+                              : coinValues.data[coinName].name,
                           currentCrypto: coinName,
                           currentValue: isWaiting == true ||
                                   coinValues.data[coinName] == null
