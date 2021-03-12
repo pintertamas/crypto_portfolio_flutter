@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/widgets/NewsCard.dart';
+import 'package:flutter_homework/widgets/news_card.dart';
 import '../theme.dart';
 import '../data/news_data.dart';
 
@@ -18,7 +18,7 @@ class _NewsScreenState extends State<NewsScreen> {
     isWaiting = true;
     try {
       newsData = await fetchNewsData();
-      print("data loaded");
+      print("news data loaded");
 
       isWaiting = false;
 

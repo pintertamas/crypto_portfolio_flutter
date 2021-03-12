@@ -29,7 +29,7 @@ class _CoinScreenState extends State<CoinScreen> {
     isWaiting = true;
     try {
       coinValues = await fetchCoinChartData(coin.id);
-      print("data loaded");
+      print("coin chart data loaded");
 
       isWaiting = false;
 

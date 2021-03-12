@@ -26,7 +26,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         setState(() {});
         setState(() {});
       });
-      print("data loaded");
+      print("coin data loaded");
 
       isWaiting = false;
 
