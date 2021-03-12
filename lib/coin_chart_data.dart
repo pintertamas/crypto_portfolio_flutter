@@ -28,7 +28,7 @@ Future<CoinChartData> fetchCoinChartData(String coinName) async {
   };
 
   var uri = Uri.https(coinGeckoSite,
-      '/api/v3/coins/${coinName.toLowerCase()}/market_chart', queryParameters);
+      '/api/v3/coins/${coinName.toLowerCase().replaceAll(' ', '')}/market_chart', queryParameters);
   var response = await http.get(uri);
   print(response.request);
 

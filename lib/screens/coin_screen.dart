@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/coin_chart_data.dart';
+import 'package:flutter_homework/screens/portfolio_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class CoinScreen extends StatefulWidget {
@@ -68,14 +70,31 @@ class _CoinScreenState extends State<CoinScreen> {
                   color: Colors.orange,
                   borderColor: Colors.deepOrange,
                   borderWidth: 1,
+                  labelDisplayMode: SparkChartLabelDisplayMode.last,
                   data: coinValues.prices == null ? 1 : coinValues.prices,
                 ),
               ),
             ),
           ),
           Container(
-            height: 100,
-            color: Colors.black
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: FloatingActionButton(
+                child: Icon(
+                  FontAwesomeIcons.chartLine,
+                  color: Colors.black87,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PortfolioScreen(),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),
