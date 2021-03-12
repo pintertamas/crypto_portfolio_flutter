@@ -1,6 +1,6 @@
 var coinGeckoSite = 'api.coingecko.com';
 
-String selectedCurrency = currenciesList[2];
+String selectedCurrency = currenciesList[0];
 
 const List<String> currenciesList = [
   'USD',
