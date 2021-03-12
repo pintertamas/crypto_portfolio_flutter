@@ -10,7 +10,6 @@ Future<List<String>> fetchVsCurrenciesData() async {
   if (response.statusCode == 200) {
     print(response.request);
     var res = jsonDecode(response.body).cast<String>();
-    print(res.runtimeType);
     return res;
   } else {
     throw Exception('Failed to load data');

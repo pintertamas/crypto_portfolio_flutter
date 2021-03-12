@@ -42,14 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text("Settings"),
       ),
       body: Container(
-        child: FloatingActionButton(
-          onPressed: () {
-            print(vsCurrencies == null ? 1 : vsCurrencies);
-            setState(() {
 
-            });
-          },
-        ),
       ),
     );
   }
