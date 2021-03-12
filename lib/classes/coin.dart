@@ -7,17 +7,21 @@ class Coin {
   final String symbol;
   final String name;
   final double price;
+  final double priceChange24h;
+  final double priceChangePercentage24h;
   final String imageAddress;
 
-  Coin(this.id, this.symbol, this.name, this.price, this.imageAddress);
+  Coin(this.id, this.symbol, this.name, this.price, this.priceChange24h, this.priceChangePercentage24h, this.imageAddress);
 
   factory Coin.fromJson(Map<String, dynamic> json) {
     String coinId = json['id'];
     String coinSymbol = json['symbol'];
     String coinName = json['name'];
     double coinPrice = double.parse(json['market_data']['current_price'][selectedCurrency.toLowerCase()].toString());
+    double priceChange24h = double.parse(json['market_data']['price_change_24h'].toString());
+    double priceChangePercentage24h = double.parse(json['market_data']['price_change_percentage_24h'].toString());
     String imageAddress = json['image']["large"];
-    return new Coin(coinId, coinSymbol, coinName, coinPrice, imageAddress);
+    return new Coin(coinId, coinSymbol, coinName, coinPrice, priceChange24h, priceChangePercentage24h, imageAddress);
   }
 }
 
