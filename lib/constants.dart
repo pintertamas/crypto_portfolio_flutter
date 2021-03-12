@@ -11,6 +11,7 @@ const Map<String, double> portfolio = {
   'bitcoin' : 6.05,
   'ethereum' : 3.4,
   'litecoin' : 20,
+  'switcheo' : 350000,
   'ripple' : 300,
   'monero' : 2.05,
   'tether' : 1002,
