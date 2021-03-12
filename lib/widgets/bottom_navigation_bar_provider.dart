@@ -63,7 +63,7 @@ class _BottomNavBarState
 }
 
 class BottomNavigationBarProvider with ChangeNotifier {
-  int _currentIndex = 1;
+  int _currentIndex = 2;
 
   get currentIndex => _currentIndex;
 
