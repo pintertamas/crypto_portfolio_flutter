@@ -1,12 +1,6 @@
 var coinGeckoSite = 'api.coingecko.com';
 
-String selectedCurrency = currenciesList[0];
-
-const List<String> currenciesList = [
-  'USD',
-  'BTC',
-  'HUF',
-];
+String selectedCurrency = 'USD'; // default vs_currency
 
 const Map<String, double> portfolio = {
   'bitcoin' : 6.05,

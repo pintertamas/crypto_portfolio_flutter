@@ -46,9 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onPressed: () {
             print(vsCurrencies == null ? 1 : vsCurrencies);
             setState(() {
-              selectedCurrency == currenciesList[0]
-                  ? selectedCurrency = currenciesList[1]
-                  : selectedCurrency = currenciesList[0];
+
             });
           },
         ),
