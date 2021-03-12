@@ -34,10 +34,10 @@ class _BottomNavBarState
         unselectedFontSize: 0,
         selectedFontSize: 18,
         unselectedIconTheme: IconThemeData(
-          size: 25
+            size: 25
         ),
         selectedIconTheme: IconThemeData(
-          size: 30
+            size: 30
         ),
         currentIndex: provider.currentIndex,
         onTap: (index) {
@@ -72,4 +72,3 @@ class BottomNavigationBarProvider with ChangeNotifier {
     notifyListeners();
   }
 }
-
