@@ -64,14 +64,19 @@ class _CoinScreenState extends State<CoinScreen> {
                 color: Colors.white,
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: SfSparkAreaChart(
                   color: Colors.orange,
                   borderColor: Colors.deepOrange,
-                  borderWidth: 1,
+                  axisLineColor: Colors.deepOrange,
+                  axisLineDashArray: coinValues.data.values.toList(),
+                  borderWidth: 3,
                   labelDisplayMode: SparkChartLabelDisplayMode.last,
-                  data: coinValues.prices == null ? 1 : coinValues.prices,
+                  labelStyle: TextStyle(
+                    fontSize: 15
+                  ),
+                  data: coinValues.prices == null ? 0 : coinValues.prices,
                 ),
               ),
             ),
