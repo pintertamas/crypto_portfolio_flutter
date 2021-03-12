@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/constants.dart';
 import 'package:flutter_homework/screens/coin_screen.dart';
-import '../coin.dart';
+import '../classes/coin.dart';
 import '../theme.dart';
+import 'package:intl/intl.dart';
 
 class CurrencyCard extends StatelessWidget {
   const CurrencyCard({Key key, @required this.balance, @required this.coin})
@@ -33,29 +34,39 @@ class CurrencyCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(100.0),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  coin == null
-                      ? 'Loading...'
-                      : '$balance ${coin.symbol.toUpperCase()}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: theme.secondaryHeaderColor,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      coin == null ? 'Loading...' : '$balance ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        //fontSize: 20.0,
+                        color: theme.secondaryHeaderColor,
+                      ),
+                    ),
+                    Text(
+                      coin == null ? '' : '${coin.symbol.toUpperCase()}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 10.0,
+                        color: theme.secondaryHeaderColor,
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
                   children: [
                     Text(
                       coin == null
                           ? ''
-                          : '${(coin.price * balance * 10000).toInt().toDouble() / 10000} ',
+                          : '${NumberFormat("#,##0.00", "en_US").format((coin.price * balance * 10000).toInt().toDouble() / 10000)} ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 15.0,
                         color: theme.secondaryHeaderColor,
                       ),
                     ),

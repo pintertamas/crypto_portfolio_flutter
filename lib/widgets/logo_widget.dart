@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../coin.dart';
+import '../classes/coin.dart';
 
 class LogoWidget extends StatelessWidget {
   const LogoWidget({
@@ -22,7 +22,7 @@ class LogoWidget extends StatelessWidget {
         ),
         child: Image.network(
           coin == null
-              ? ''
+              ? 'https://www.auszac.com/wp/wp-content/uploads/2017/04/circle-placeholder.png'
               : '${coin.imageAddress}',
         ),
       ),

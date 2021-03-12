@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'constants.dart';
-import 'news.dart';
+import '../constants.dart';
+import '../classes/news.dart';
 
 class NewsData {
   List<News> data = [];

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/widgets/NewsCard.dart';
 import '../theme.dart';
-import '../news_data.dart';
+import '../data/news_data.dart';
 
 class NewsScreen extends StatefulWidget {
   @override

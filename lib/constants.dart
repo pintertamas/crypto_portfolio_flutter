@@ -1,10 +1,11 @@
 var coinGeckoSite = 'api.coingecko.com';
 
-String selectedCurrency = currenciesList[0];
+String selectedCurrency = currenciesList[2];
 
 const List<String> currenciesList = [
   'USD',
   'BTC',
+  'HUF',
 ];
 
 const Map<String, double> portfolio = {

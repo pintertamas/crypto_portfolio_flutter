@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/screens/single_news_screen.dart';
-import '../news.dart';
+import '../classes/news.dart';
 import '../theme.dart';
 
 class NewsCard extends StatelessWidget {

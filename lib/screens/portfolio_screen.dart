@@ -3,9 +3,9 @@ import 'package:flutter_homework/constants.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
 import 'package:intl/intl.dart';
 import '../calculate_balance.dart';
-import '../coin.dart';
+import '../classes/coin.dart';
 import '../theme.dart';
-import '../coin_data.dart';
+import '../data/coin_data.dart';
 import '../widgets/currency_card.dart';
 
 class PortfolioScreen extends StatefulWidget {

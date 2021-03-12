@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'constants.dart';
+import '../constants.dart';
 
 class CoinChartData {
   Map<int, double> data = new Map();

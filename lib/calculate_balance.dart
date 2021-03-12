@@ -1,4 +1,4 @@
-import 'coin_data.dart';
+import 'data/coin_data.dart';
 
 double calculateBalance(CoinData coinValues, Map<String, double> portfolio) {
   double balance = 0;

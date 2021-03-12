@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/theme.dart';
-import '../news.dart';
+import '../classes/news.dart';
 
 class SingleNewsScreen extends StatefulWidget {
   const SingleNewsScreen({this.news});

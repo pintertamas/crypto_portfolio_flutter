@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/coin_chart_data.dart';
+import '../data/coin_chart_data.dart';
 import 'package:flutter_homework/theme.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-import '../coin.dart';
+import '../classes/coin.dart';
 
 class CoinScreen extends StatefulWidget {
   const CoinScreen({this.coin});

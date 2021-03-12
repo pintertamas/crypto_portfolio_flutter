@@ -1,5 +1,5 @@
-import 'coin.dart';
-import 'constants.dart';
+import '../classes/coin.dart';
+import '../constants.dart';
 
 class CoinData {
   Map<String, Coin> data = new Map();
