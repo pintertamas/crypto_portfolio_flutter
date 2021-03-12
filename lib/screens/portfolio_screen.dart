@@ -45,7 +45,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Crypto Portfolio'),
+            Text('Portfolio balance'),
             Text(calculateBalance(coinValues, portfolio) == 0 ? 'Loading...' : '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency'),
           ],
         ),
