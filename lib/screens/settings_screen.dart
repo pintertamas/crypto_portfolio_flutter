@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/data/vs_currencies_data.dart';
-
-import '../constants.dart';
+import 'package:flutter_homework/widgets/dropdown_button.dart';
+import '../theme.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -10,39 +10,16 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
-  List<String> vsCurrencies = [];
-
-  bool isWaiting = false;
-
-  void getData() async {
-    isWaiting = true;
-    try {
-      vsCurrencies = await fetchVsCurrenciesData();
-      print("vs_currencies data loaded");
-
-      isWaiting = false;
-
-      setState(() {});
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
         title: Text("Settings"),
       ),
-      body: Container(
-
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: DropDownButton(),
       ),
     );
   }

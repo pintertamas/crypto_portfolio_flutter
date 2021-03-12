@@ -6,8 +6,11 @@ import '../theme.dart';
 import 'package:intl/intl.dart';
 
 class CurrencyCard extends StatelessWidget {
-  const CurrencyCard({Key key, @required this.balance, @required this.coin})
-      : super(key: key);
+  const CurrencyCard({
+    Key key,
+    @required this.balance,
+    @required this.coin,
+  }) : super(key: key);
 
   final double balance;
   final Coin coin;
