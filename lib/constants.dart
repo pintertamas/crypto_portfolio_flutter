@@ -13,12 +13,20 @@ const List<String> currenciesList = [
 ];
 
 const Map<String, double> portfolio = {
-  'BTC' : 2.05,
+  'BTC' : 6.05,
   'ETH' : 3.4,
-  'LTC' : 2,
+  'LTC' : 20,
   'XRP' : 300,
   'XMR' : 2.05,
   'USDT' : 1002,
-  'BNB' : 2,
+  'BNB' : 43,
   'ADA' : 30,
+  'SNX' : 1002,
+  'THETA' : 654,
+  'VET' : 33,
+  'ATOM' : 32,
+  'CRO' : 40,
+  'XLM' : 5321,
+  'DOGE' : 200,
+
 };

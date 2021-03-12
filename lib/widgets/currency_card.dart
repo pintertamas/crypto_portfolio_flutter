@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/screens/coin_screen.dart';
+import '../theme.dart';
 
 class CurrencyCard extends StatelessWidget {
   const CurrencyCard({
@@ -20,7 +21,7 @@ class CurrencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 0),
+      padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 10),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -33,7 +34,7 @@ class CurrencyCard extends StatelessWidget {
           );
         },
         child: Card(
-          color: Colors.deepOrange,
+          color: theme.primaryColor,
           elevation: 5.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100.0),
@@ -47,7 +48,7 @@ class CurrencyCard extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20.0,
-                color: Colors.white,
+                color: theme.secondaryHeaderColor,
               ),
             ),
           ),

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/coin_chart_data.dart';
-import 'package:flutter_homework/screens/portfolio_screen.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_homework/theme.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class CoinScreen extends StatefulWidget {
@@ -48,7 +47,7 @@ class _CoinScreenState extends State<CoinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
         title: Text('$coinName'),
       ),
@@ -57,47 +56,29 @@ class _CoinScreenState extends State<CoinScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Card(
-                color: Colors.white,
+                color: theme.primaryColor,
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: SfSparkAreaChart(
-                  color: Colors.orange,
-                  borderColor: Colors.deepOrange,
-                  axisLineColor: Colors.deepOrange,
-                  axisLineDashArray: coinValues.data.values.toList(),
-                  borderWidth: 3,
-                  labelDisplayMode: SparkChartLabelDisplayMode.last,
-                  labelStyle: TextStyle(
-                    fontSize: 15
-                  ),
-                  data: coinValues.prices == null ? 0 : coinValues.prices,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: FloatingActionButton(
-                child: Icon(
-                  FontAwesomeIcons.chartLine,
-                  color: Colors.black87,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PortfolioScreen(),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SfSparkAreaChart(
+                    color: theme.primaryColor,
+                    borderColor: theme.accentColor,
+                    axisLineDashArray: coinValues.data.values.toList(),
+                    borderWidth: 3,
+                    labelDisplayMode: SparkChartLabelDisplayMode.last,
+                    axisLineWidth: 0,
+                    labelStyle: TextStyle(
+                      fontSize: 18
                     ),
-                  );
-                },
+                    data: coinValues.prices == null ? 0 : coinValues.prices,
+                  ),
+                ),
               ),
             ),
           ),

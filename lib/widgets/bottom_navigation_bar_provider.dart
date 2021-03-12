@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../theme.dart';
+
 class BottomNavBar extends StatefulWidget {
   @override
   _BottomNavBarState createState() =>
@@ -26,8 +28,8 @@ class _BottomNavBarState
     return Scaffold(
       body: currentTab[provider.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.orange,
-        selectedItemColor: Colors.white,
+        backgroundColor: theme.primaryColor,
+        selectedItemColor: theme.accentColor,
         iconSize: 30,
         unselectedFontSize: 0,
         selectedFontSize: 18,
@@ -61,7 +63,7 @@ class _BottomNavBarState
 }
 
 class BottomNavigationBarProvider with ChangeNotifier {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
 
   get currentIndex => _currentIndex;
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/coin_data.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 import '../calculate_balance.dart';
+import '../theme.dart';
 import '../constants.dart';
+
 
 class BalanceWidget extends StatelessWidget {
   const BalanceWidget({
@@ -15,9 +18,11 @@ class BalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.deepOrange,
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(100.0),
+      ),
+      color: theme.accentColor,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
         child: Row(
@@ -25,12 +30,12 @@ class BalanceWidget extends StatelessWidget {
           children: [
             Icon(
               FontAwesomeIcons.coins,
-              color: Colors.white,
+              color: theme.primaryColor,
             ),
             Text(
-              '${calculateBalance(coinValues, portfolio)} $selectedCurrency',
+              '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency',
               style: TextStyle(
-                color: Colors.white,
+                color: theme.primaryColor,
                 fontSize: 30,
               ),
             ),

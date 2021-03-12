@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/constants.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
-import '../widgets/balance_widget.dart';
+import 'package:intl/intl.dart';
+import '../calculate_balance.dart';
+import '../theme.dart';
 import '../coin_data.dart';
-
 import '../widgets/currency_card.dart';
 
 class PortfolioScreen extends StatefulWidget {
@@ -39,55 +40,62 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
-        title: Text('Crypto Portfolio'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Crypto Portfolio'),
+            Text(calculateBalance(coinValues, portfolio) == 0 ? 'Loading...' : '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency'),
+          ],
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(10),
-                itemCount: portfolio.length,
-                itemBuilder: (BuildContext context, int index) {
-                  String coinName = portfolio.keys.elementAt(index);
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: LogoWidget(
-                          isWaiting: isWaiting,
-                          coinValues: coinValues,
-                          coinName: coinName,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(10),
+                  itemCount: portfolio.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    String coinName = portfolio.keys.elementAt(index);
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: LogoWidget(
+                            isWaiting: isWaiting,
+                            coinValues: coinValues,
+                            coinName: coinName,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 8,
-                        child: CurrencyCard(
-                          balance: portfolio[coinName],
-                          currentCryptoFullName: isWaiting == true ||
-                                  coinValues.data[coinName] == null
-                              ? "Loading..."
-                              : coinValues.data[coinName].name,
-                          currentCrypto: coinName,
-                          currentValue: isWaiting == true ||
-                                  coinValues.data[coinName] == null
-                              ? 0
-                              : coinValues.data[coinName].price,
-                          selectedCurrency: selectedCurrency,
+                        Expanded(
+                          flex: 8,
+                          child: CurrencyCard(
+                            balance: portfolio[coinName],
+                            currentCryptoFullName: isWaiting == true ||
+                                    coinValues.data[coinName] == null
+                                ? "Loading..."
+                                : coinValues.data[coinName].name,
+                            currentCrypto: coinName,
+                            currentValue: isWaiting == true ||
+                                    coinValues.data[coinName] == null
+                                ? 0
+                                : coinValues.data[coinName].price,
+                            selectedCurrency: selectedCurrency,
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }),
-          ),
-          BalanceWidget(
-            coinValues: coinValues,
+                      ],
+                    );
+                  }),
+            ),
           ),
         ],
       ),

@@ -20,6 +20,7 @@ class LogoWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0),
       child: Card(
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0),
         ),
