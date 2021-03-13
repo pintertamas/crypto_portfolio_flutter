@@ -47,16 +47,18 @@ class _NewsScreenState extends State<NewsScreen> {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: isWaiting == true || newsData == null ? Text('${EasyLoading.show(status: 'Loading...')}') :ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(10),
-              itemCount: newsData.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return NewsCard(
-                  news: newsData.data[index],
-                );
-              }),
+          child: isWaiting == true || newsData == null
+              ? Text('${EasyLoading.show(status: 'Loading...')}')
+              : ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(10),
+                  itemCount: newsData.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return NewsCard(
+                      news: newsData.data[index],
+                    );
+                  }),
         ),
       ),
     );
