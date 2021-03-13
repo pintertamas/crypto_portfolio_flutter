@@ -31,7 +31,7 @@ Future<Coin> fetchCoinData(String coinName) async {
   );
 
   if (response.statusCode == 200) {
-    print(response.request);
+    //print(response.request);
     return Coin.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to load data');

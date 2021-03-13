@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/data/vs_currencies_data.dart';
 import 'package:flutter_homework/widgets/dropdown_button.dart';
 import '../theme.dart';
@@ -10,6 +11,30 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  List<String> vsCurrencies = [];
+
+  bool isWaiting = false;
+
+  void getData() async {
+    isWaiting = true;
+    try {
+      vsCurrencies = await fetchVsCurrenciesData();
+      print("vs_currencies data loaded");
+
+      isWaiting = false;
+
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +56,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: theme.primaryColor,
                   ),
                 ),
-                DropDownButton(),
+                if (vsCurrencies == [] || vsCurrencies == null)
+                  Text(
+                    'Loading',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  )
+                else
+                  FutureBuilder<List<String>>(
+                    future: fetchVsCurrenciesData(), // async work
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<String>> snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Text(
+                            '${EasyLoading.show(status: 'Loading...')}',
+                            style: TextStyle(
+                              color: theme.primaryColor,
+                              fontSize: 20,
+                            ),
+                          );
+                        default:
+                          if (snapshot.hasError)
+                            return Text('Error: ${snapshot.error}');
+                          else {
+                            EasyLoading.dismiss();
+                            return DropDownButton(
+                              dropDownValues: vsCurrencies,
+                            );
+                          }
+                      }
+                    },
+                  )
               ]),
         ),
       ),

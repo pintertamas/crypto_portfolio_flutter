@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/widgets/news_card.dart';
 import '../theme.dart';
 import '../data/news_data.dart';
@@ -22,7 +23,9 @@ class _NewsScreenState extends State<NewsScreen> {
 
       isWaiting = false;
 
-      setState(() {});
+      setState(() {
+        EasyLoading.dismiss();
+      });
     } catch (e) {
       print(e);
     }
@@ -44,7 +47,7 @@ class _NewsScreenState extends State<NewsScreen> {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: ListView.builder(
+          child: isWaiting == true || newsData == null ? Text('${EasyLoading.show(status: 'Loading...')}') :ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               padding: const EdgeInsets.all(10),

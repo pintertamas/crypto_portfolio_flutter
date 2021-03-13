@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/screens/single_news_screen.dart';
 import '../classes/news.dart';
 import '../theme.dart';
@@ -33,7 +34,7 @@ class NewsCard extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           child: Text(
-            news == null ? 'Loading...' : '${news.description}',
+            news == null ? '${EasyLoading.show(status: 'Loading...')}' : '${news.description}',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15.0,

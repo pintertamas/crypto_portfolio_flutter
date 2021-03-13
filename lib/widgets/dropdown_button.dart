@@ -5,34 +5,25 @@ import '../constants.dart';
 import '../theme.dart';
 
 class DropDownButton extends StatefulWidget {
+  final List<String> dropDownValues;
+
+  const DropDownButton({
+    Key key,
+    this.dropDownValues,
+  }) : super(key: key);
+
   @override
-  _DropDownButtonState createState() => _DropDownButtonState();
+  _DropDownButtonState createState() => _DropDownButtonState(dropDownValues);
 }
 
 class _DropDownButtonState extends State<DropDownButton> {
-  List<String> vsCurrencies = [];
-
-  bool isWaiting = false;
-
-  void getData() async {
-    isWaiting = true;
-    try {
-      vsCurrencies = await fetchVsCurrenciesData();
-      print("vs_currencies data loaded");
-
-      isWaiting = false;
-
-      setState(() {});
-    } catch (e) {
-      print(e);
-    }
+  List<String> dropDownValues = [];
+  _DropDownButtonState(List<String> dropDownValues){
+    this.dropDownValues = dropDownValues;
+    print(dropDownValues.length);
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +34,7 @@ class _DropDownButtonState extends State<DropDownButton> {
         focusColor: theme.secondaryHeaderColor,
         value: selectedCurrency.toLowerCase(),
         iconEnabledColor: theme.primaryColor,
-        items: vsCurrencies.map<DropdownMenuItem<String>>((String value) {
+        items: dropDownValues.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value.toLowerCase(),
             child: Padding(

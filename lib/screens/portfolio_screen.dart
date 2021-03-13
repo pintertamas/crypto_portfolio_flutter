@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/constants.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
 import 'package:intl/intl.dart';
@@ -22,9 +23,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     isWaiting = true;
     try {
       portfolio.keys.forEach((element) async {
-        await fetchCoinData(element).then((value) => coinValues.data[element] = value);
-        setState(() {});
-        setState(() {});
+        await fetchCoinData(element)
+            .then((value) => coinValues.data[element] = value);
+        setState(() {
+          EasyLoading.dismiss();
+        });
       });
       print("coin data loaded");
 
@@ -51,7 +54,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Portfolio balance'),
-            Text(coinValues.data.isEmpty ? 'Loading...' : '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency'),
+            coinValues.data.isEmpty
+                ? Text('${EasyLoading.show(status: 'Loading...')}')
+                : Text(
+                    '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency'),
           ],
         ),
       ),

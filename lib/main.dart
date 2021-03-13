@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'theme.dart';
 import 'widgets/bottom_navigation_bar_provider.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
         child: BottomNavBar(),
         create: (BuildContext context) => BottomNavigationBarProvider(),
       ),
+      builder: EasyLoading.init(),
     );
   }
 }
