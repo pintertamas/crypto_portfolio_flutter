@@ -19,6 +19,7 @@ class _NewsScreenState extends State<NewsScreen> {
     isWaiting = true;
     try {
       newsData = await fetchNewsData();
+      if (!mounted) return;
       print("news data loaded");
 
       isWaiting = false;
@@ -48,7 +49,12 @@ class _NewsScreenState extends State<NewsScreen> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: isWaiting == true || newsData == null
-              ? Text('${EasyLoading.show(status: 'Loading...')}')
+              ? Text(
+                  '${EasyLoading.show(status: 'Loading...')}',
+                  style: TextStyle(
+                    fontSize: 0,
+                  ),
+                )
               : ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,

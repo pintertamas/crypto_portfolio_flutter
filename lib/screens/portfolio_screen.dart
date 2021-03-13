@@ -25,6 +25,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       portfolio.keys.forEach((element) async {
         await fetchCoinData(element)
             .then((value) => coinValues.data[element] = value);
+        if (!mounted) return;
         setState(() {
           EasyLoading.dismiss();
         });
@@ -53,11 +54,28 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Portfolio balance'),
-            coinValues.data.isEmpty
-                ? Text('${EasyLoading.show(status: 'Loading...')}')
-                : Text(
-                    '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency'),
+            Expanded(
+                flex: 1,
+                child: Text(
+                  'Portfolio balance',
+                )),
+            if (coinValues.data.isEmpty)
+              Expanded(
+                flex: 1,
+                child: Text(
+                  '${EasyLoading.show(status: 'Loading...')}',
+                  style: TextStyle(
+                    fontSize: 0,
+                  ),
+                ),
+              )
+            else
+              Expanded(
+                flex: 1,
+                child: Text(
+                  '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} $selectedCurrency',
+                ),
+              ),
           ],
         ),
       ),

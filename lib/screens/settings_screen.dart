@@ -19,6 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     isWaiting = true;
     try {
       vsCurrencies = await fetchVsCurrenciesData();
+      if (!mounted) return;
       print("vs_currencies data loaded");
 
       isWaiting = false;
@@ -42,55 +43,74 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: Text("Settings"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Convert currency',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: theme.primaryColor,
-                  ),
-                ),
-                if (vsCurrencies == [] || vsCurrencies == null)
-                  Text(
-                    'Loading',
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  )
-                else
-                  FutureBuilder<List<String>>(
-                    future: fetchVsCurrenciesData(), // async work
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<String>> snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Text(
-                            '${EasyLoading.show(status: 'Loading...')}',
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 20,),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              elevation: 10,
+              color: theme.primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 25),
+                          child: Text(
+                            'Convert currency',
                             style: TextStyle(
-                              color: theme.primaryColor,
                               fontSize: 20,
+                              color: theme.secondaryHeaderColor,
                             ),
-                          );
-                        default:
-                          if (snapshot.hasError)
-                            return Text('Error: ${snapshot.error}');
-                          else {
-                            EasyLoading.dismiss();
-                            return DropDownButton(
-                              dropDownValues: vsCurrencies,
-                            );
-                          }
-                      }
-                    },
-                  )
-              ]),
-        ),
+                          ),
+                        ),
+                        if (vsCurrencies == [] || vsCurrencies == null)
+                          Text(
+                            'Loading...',
+                            style: TextStyle(
+                              color: theme.secondaryHeaderColor,
+                              fontSize: 0,
+                            ),
+                          )
+                        else
+                          FutureBuilder<List<String>>(
+                            future: fetchVsCurrenciesData(), // async work
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<String>> snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return Text(
+                                    '${EasyLoading.show(status: 'Loading...')}',
+                                    style: TextStyle(
+                                      fontSize: 0,
+                                    ),
+                                  );
+                                default:
+                                  if (snapshot.hasError)
+                                    return Text('Error: ${snapshot.error}');
+                                  else {
+                                    EasyLoading.dismiss();
+                                    return Card(
+                                      child: DropDownButton(
+                                        dropDownValues: vsCurrencies,
+                                      ),
+                                    );
+                                  }
+                              }
+                            },
+                          )
+                      ]),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

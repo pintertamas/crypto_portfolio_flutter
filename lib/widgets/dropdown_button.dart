@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/data/vs_currencies_data.dart';
 import '../constants.dart';
 import '../theme.dart';
 
@@ -20,7 +19,6 @@ class _DropDownButtonState extends State<DropDownButton> {
   List<String> dropDownValues = [];
   _DropDownButtonState(List<String> dropDownValues){
     this.dropDownValues = dropDownValues;
-    print(dropDownValues.length);
   }
 
 
