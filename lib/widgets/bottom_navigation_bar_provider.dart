@@ -9,18 +9,27 @@ import 'package:flutter/cupertino.dart';
 import '../theme.dart';
 
 class BottomNavBar extends StatefulWidget {
+  final Map<String, double> portfolio;
+
+  const BottomNavBar({Key key, this.portfolio}) : super(key: key);
+
   @override
-  _BottomNavBarState createState() =>
-      _BottomNavBarState();
+  _BottomNavBarState createState() => _BottomNavBarState(portfolio);
 }
 
-class _BottomNavBarState
-    extends State<BottomNavBar> {
-  var currentTab = [
-    NewsScreen(),
-    PortfolioScreen(),
-    SettingsScreen(),
-  ];
+class _BottomNavBarState extends State<BottomNavBar> {
+  Map<String, double> portfolio;
+
+  var currentTab = [];
+
+  _BottomNavBarState(Map<String, double> portfolio) {
+    this.portfolio = portfolio;
+    currentTab = [
+      NewsScreen(),
+      PortfolioScreen(portfolio: portfolio),
+      SettingsScreen(portfolio: portfolio),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +42,8 @@ class _BottomNavBarState
         iconSize: 30,
         unselectedFontSize: 0,
         selectedFontSize: 18,
-        unselectedIconTheme: IconThemeData(
-            size: 25
-        ),
-        selectedIconTheme: IconThemeData(
-            size: 30
-        ),
+        unselectedIconTheme: IconThemeData(size: 25),
+        selectedIconTheme: IconThemeData(size: 30),
         currentIndex: provider.currentIndex,
         onTap: (index) {
           provider.currentIndex = index;

@@ -4,14 +4,25 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/data/supported_coins_data.dart';
 import 'package:flutter_homework/data/vs_currencies_data.dart';
 import 'package:flutter_homework/widgets/dropdown_button.dart';
+import '../constants.dart';
 import '../theme.dart';
 
 class SettingsScreen extends StatefulWidget {
+  final Map<String, double> portfolio;
+
+  const SettingsScreen({Key key, this.portfolio}) : super(key: key);
+
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  _SettingsScreenState createState() => _SettingsScreenState(portfolio);
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  Map<String, double> portfolio;
+
+  _SettingsScreenState(Map<String, double> portfolio) {
+    this.portfolio = portfolio;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,8 +43,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               elevation: 10,
               color: theme.primaryColor,
-              child: Container(
-                height: 100,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    portfolio['btc'] = 10;
+                  });
+                },
+                child: Container(
+                  height: 100,
+                ),
               ),
             ),
           ),

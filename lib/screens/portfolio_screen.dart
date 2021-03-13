@@ -5,19 +5,31 @@ import 'package:flutter_homework/widgets/logo_widget.dart';
 import 'package:intl/intl.dart';
 import '../calculate_balance.dart';
 import '../classes/coin.dart';
+import '../data/coin_data.dart';
 import '../theme.dart';
 import '../data/coin_data.dart';
 import '../widgets/currency_card.dart';
 
 class PortfolioScreen extends StatefulWidget {
+  final Map<String, double> portfolio;
+
+  const PortfolioScreen({Key key, this.portfolio}) : super(key: key);
+
   @override
-  _PortfolioScreenState createState() => _PortfolioScreenState();
+  _PortfolioScreenState createState() => _PortfolioScreenState(portfolio);
 }
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
-  CoinData coinValues = new CoinData();
+  Map<String, double> portfolio;
+
+  CoinData coinValues;
 
   bool isWaiting = false;
+
+  _PortfolioScreenState(Map<String, double> portfolio) {
+    this.portfolio = portfolio;
+    coinValues = new CoinData(portfolio);
+  }
 
   void getData() async {
     isWaiting = true;
