@@ -11,31 +11,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  List<String> vsCurrencies = [];
-
-  bool isWaiting = false;
-
-  void getData() async {
-    isWaiting = true;
-    try {
-      vsCurrencies = await fetchVsCurrenciesData();
-      if (!mounted) return;
-      print("vs_currencies data loaded");
-
-      isWaiting = false;
-
-      setState(() {});
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +19,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text("Settings"),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 20,),
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+            ),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
@@ -70,41 +48,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ),
                         ),
-                        if (vsCurrencies == [] || vsCurrencies == null)
-                          Text(
-                            'Loading...',
-                            style: TextStyle(
-                              color: theme.secondaryHeaderColor,
-                              fontSize: 0,
-                            ),
-                          )
-                        else
-                          FutureBuilder<List<String>>(
-                            future: fetchVsCurrenciesData(), // async work
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<String>> snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.waiting:
-                                  return Text(
-                                    '${EasyLoading.show(status: 'Loading...')}',
-                                    style: TextStyle(
-                                      fontSize: 0,
-                                    ),
+                        FutureBuilder<List<String>>(
+                          future: fetchVsCurrenciesData(), // async work
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<String>> snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return Text(
+                                  '${EasyLoading.show(status: 'Loading...')}',
+                                  style: TextStyle(
+                                    fontSize: 0,
+                                  ),
+                                );
+                              default:
+                                if (snapshot.hasError)
+                                  return Text('Error: ${snapshot.error}');
+                                else {
+                                  EasyLoading.dismiss();
+                                  return DropDownButton(
+                                    dropDownValues: snapshot.data,
                                   );
-                                default:
-                                  if (snapshot.hasError)
-                                    return Text('Error: ${snapshot.error}');
-                                  else {
-                                    EasyLoading.dismiss();
-                                    return Card(
-                                      child: DropDownButton(
-                                        dropDownValues: vsCurrencies,
-                                      ),
-                                    );
-                                  }
-                              }
-                            },
-                          )
+                                }
+                            }
+                          },
+                        )
                       ]),
                 ),
               ),

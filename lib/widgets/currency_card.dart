@@ -74,7 +74,7 @@ class CurrencyCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '$selectedCurrency',
+                      '${selectedCurrency.toUpperCase()}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 10.0,

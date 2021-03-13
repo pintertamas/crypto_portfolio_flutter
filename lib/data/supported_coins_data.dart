@@ -8,7 +8,6 @@ Future<List<String>> fetchSupportedCoinsData() async {
   );
 
   if (response.statusCode == 200) {
-    //print(response.request);
     var res = jsonDecode(response.body).cast<String>();
     return res;
   } else {

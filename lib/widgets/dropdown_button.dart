@@ -21,14 +21,13 @@ class _DropDownButtonState extends State<DropDownButton> {
     this.dropDownValues = dropDownValues;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
       color: theme.accentColor,
       child: DropdownButton<String>(
         dropdownColor: theme.accentColor,
+        elevation: 10,
         focusColor: theme.secondaryHeaderColor,
         value: selectedCurrency.toLowerCase(),
         iconEnabledColor: theme.primaryColor,
