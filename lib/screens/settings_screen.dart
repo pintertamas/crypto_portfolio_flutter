@@ -19,7 +19,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: DropDownButton(),
+        child: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Convert currency',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: theme.primaryColor,
+                  ),
+                ),
+                DropDownButton(),
+              ]),
+        ),
       ),
     );
   }
