@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_homework/data/supported_coins_data.dart';
 import 'package:flutter_homework/data/vs_currencies_data.dart';
 import 'package:flutter_homework/widgets/dropdown_button.dart';
 import '../theme.dart';
@@ -19,8 +20,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text("Settings"),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+            ),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              elevation: 10,
+              color: theme.primaryColor,
+              child: Container(
+                height: 100,
+              ),
+            ),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: 20,
@@ -82,3 +98,62 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
+
+/*Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+            ),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              elevation: 10,
+              color: theme.primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 25),
+                        child: Text(
+                          'Add currency',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: theme.secondaryHeaderColor,
+                          ),
+                        ),
+                      ),
+                      FutureBuilder<SupportedCoinData>(
+                        future: fetchSupportedCoinsData(), // async work
+                        builder: (BuildContext context,
+                            AsyncSnapshot<SupportedCoinData> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return Text(
+                                '${EasyLoading.show(status: 'Loading...')}',
+                                style: TextStyle(
+                                  fontSize: 0,
+                                ),
+                              );
+                            default:
+                              if (snapshot.hasError)
+                                return Text('Error: ${snapshot.error}');
+                              else {
+                                EasyLoading.dismiss();
+                                return DropDownButton(
+                                  dropDownValues:
+                                      convertToNamesOnly(snapshot.data),
+                                );
+                              }
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),*/
