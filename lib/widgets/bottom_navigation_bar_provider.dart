@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_homework/data/device_data.dart';
 import 'package:flutter_homework/screens/news_screen.dart';
 import 'package:flutter_homework/screens/portfolio_screen.dart';
 import 'package:flutter_homework/screens/settings_screen.dart';
@@ -18,7 +19,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  Map<String, double> portfolio;
+  Map<String, double> portfolio = new Map();
 
   var currentTab = [];
 

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_homework/data/device_data.dart';
 import 'package:flutter_homework/data/supported_coins_data.dart';
 import 'package:flutter_homework/data/vs_currencies_data.dart';
 import 'package:flutter_homework/widgets/dropdown_button.dart';
-import '../constants.dart';
 import '../theme.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -43,16 +43,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               elevation: 10,
               color: theme.primaryColor,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    portfolio['btc'] = 10;
-                  });
-                },
-                child: Container(
-                  height: 100,
-                ),
-              ),
             ),
           ),
           Padding(
@@ -77,6 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Text(
                             'Convert currency',
                             style: TextStyle(
+                              fontWeight: FontWeight.bold,
                               fontSize: 20,
                               color: theme.secondaryHeaderColor,
                             ),
