@@ -3,12 +3,10 @@ import '../classes/coin.dart';
 
 class LogoWidget extends StatelessWidget {
   const LogoWidget({
-    Key key,
-    @required this.isWaiting,
-    @required this.coin,
+    Key? key,
+    required this.coin,
   }) : super(key: key);
 
-  final bool isWaiting;
   final Coin coin;
 
   @override
@@ -21,9 +19,7 @@ class LogoWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(100.0),
         ),
         child: Image.network(
-          coin == null
-              ? 'https://www.auszac.com/wp/wp-content/uploads/2017/04/circle-placeholder.png'
-              : '${coin.imageAddress}',
+          '${coin.imageAddress}',
         ),
       ),
     );

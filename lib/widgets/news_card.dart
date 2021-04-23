@@ -5,8 +5,8 @@ import '../theme.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
-    Key key,
-    @required this.news,
+    Key? key,
+    required this.news,
   }) : super(key: key);
 
   final News news;

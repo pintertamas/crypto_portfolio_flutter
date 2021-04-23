@@ -1,5 +1,4 @@
 import '../classes/coin.dart';
-import '../constants.dart';
 
 class CoinData {
   final Map<String, double> portfolio;
@@ -11,7 +10,9 @@ class CoinData {
   factory CoinData.getCoinData(Map<String, double> portfolio) {
     CoinData res = new CoinData(portfolio);
     portfolio.keys.forEach((element) async {
-      res.data[element] = await fetchCoinData(element);
+      final coin = await fetchCoinData(element);
+      if (coin != null)
+        res.data[element] = coin;
     });
     return res;
   }

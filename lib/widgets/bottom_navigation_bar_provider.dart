@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/data/device_data.dart';
 import 'package:flutter_homework/screens/news_screen.dart';
 import 'package:flutter_homework/screens/portfolio_screen.dart';
 import 'package:flutter_homework/screens/settings_screen.dart';
@@ -12,7 +11,7 @@ import '../theme.dart';
 class BottomNavBar extends StatefulWidget {
   final Map<String, double> portfolio;
 
-  const BottomNavBar({Key key, this.portfolio}) : super(key: key);
+  const BottomNavBar({Key? key, required this.portfolio}) : super(key: key);
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState(portfolio);
@@ -71,7 +70,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 class BottomNavigationBarProvider with ChangeNotifier {
   int _currentIndex = 0;
 
-  get currentIndex => _currentIndex;
+  int get currentIndex => _currentIndex;
 
   set currentIndex(int index) {
     _currentIndex = index;

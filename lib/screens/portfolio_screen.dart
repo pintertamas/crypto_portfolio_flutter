@@ -7,13 +7,12 @@ import '../calculate_balance.dart';
 import '../classes/coin.dart';
 import '../data/coin_data.dart';
 import '../theme.dart';
-import '../data/coin_data.dart';
 import '../widgets/currency_card.dart';
 
 class PortfolioScreen extends StatefulWidget {
   final Map<String, double> portfolio;
 
-  const PortfolioScreen({Key key, this.portfolio}) : super(key: key);
+  const PortfolioScreen({Key? key, required this.portfolio}) : super(key: key);
 
   @override
   _PortfolioScreenState createState() => _PortfolioScreenState(portfolio);
@@ -21,41 +20,31 @@ class PortfolioScreen extends StatefulWidget {
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
   Map<String, double> portfolio;
+  final CoinData coinValues;
+  late Future<Map<String, Coin>> coinData;
 
-  CoinData coinValues;
+  _PortfolioScreenState(this.portfolio) : coinValues = CoinData(portfolio);
 
-  bool isWaiting = false;
-
-  _PortfolioScreenState(Map<String, double> portfolio) {
-    this.portfolio = portfolio;
-    coinValues = new CoinData(portfolio);
-  }
-
-  void getData() async {
-    isWaiting = true;
+  Future<Map<String, Coin>> getData() async {
     try {
-      portfolio.keys.forEach((element) async {
-        await fetchCoinData(element)
-            .then((value) => coinValues.data[element] = value);
-        if (!mounted) return;
-        setState(() {
-          EasyLoading.dismiss();
-        });
-      });
+      final keys = portfolio.keys.toList();
+      for (var i = 0; i < keys.length; i++) {
+        final data = await fetchCoinData(keys[i]);
+        if (data != null) coinValues.data[keys[i]] = data;
+      }
       print("coin data loaded");
-
-      isWaiting = false;
-
-      setState(() {});
+      EasyLoading.dismiss();
+      return coinValues.data;
     } catch (e) {
       print(e);
+      return coinValues.data;
     }
   }
 
   @override
   void initState() {
     super.initState();
-    getData();
+    coinData = getData();
   }
 
   @override
@@ -98,34 +87,46 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(10),
-                  itemCount: portfolio.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    String coinName = portfolio.keys.elementAt(index);
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: LogoWidget(
-                            isWaiting: isWaiting,
-                            coin: coinValues.data[coinName],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 8,
-                          child: CurrencyCard(
-                            balance: portfolio[coinName],
-                            coin: coinValues.data[coinName],
-                          ),
-                        ),
-                      ],
+              child: FutureBuilder<Map<String, Coin>>(
+                future: coinData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData ||
+                      snapshot.connectionState == ConnectionState.done) {
+                    final data = snapshot.data!;
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(10),
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String coinName = data.keys.elementAt(index);
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: LogoWidget(
+                                coin: data[coinName]!,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 8,
+                              child: CurrencyCard(
+                                balance: portfolio[coinName]!,
+                                coin: data[coinName]!,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     );
-                  }),
+                  } else
+                    return Center(
+                      child: Text("Loading or else"),
+                    );
+                },
+              ),
             ),
           ),
         ],

@@ -6,7 +6,7 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import '../classes/coin.dart';
 
 class CoinScreen extends StatefulWidget {
-  const CoinScreen({this.coin});
+  const CoinScreen({required this.coin});
 
   final Coin coin;
 
@@ -77,7 +77,7 @@ class _CoinScreenState extends State<CoinScreen> {
                     labelStyle: TextStyle(
                       fontSize: 18
                     ),
-                    data: coinValues.prices == null ? 0 : coinValues.prices,
+                    data: coinValues.prices,
                   ),
                 ),
               ),

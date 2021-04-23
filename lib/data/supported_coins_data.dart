@@ -9,7 +9,9 @@ class SupportedCoinData {
   SupportedCoinData();
 
   factory SupportedCoinData.fromJson(Map<String, dynamic> json) {
+    print("dasdada");
     SupportedCoinData res = new SupportedCoinData();
+    print(json.length);
     for (int i = 0; i < json.length; i++) {
       String id = json[i]['id'];
       String symbol = json[i]['symbol'];
@@ -21,14 +23,6 @@ class SupportedCoinData {
     }
     return res;
   }
-}
-
-List<String> convertToNamesOnly(SupportedCoinData map) {
-  List<String> res = [];
-  map.data.forEach((key, value) {
-    res.add(map.data[key].symbol);
-  });
-  return res;
 }
 
 Future<SupportedCoinData> fetchSupportedCoinsData() async {

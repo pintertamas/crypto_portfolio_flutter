@@ -11,10 +11,10 @@ class Coin {
   final String symbol;
   @required
   final String name;
-  final double price;
-  final double priceChange24h;
-  final double priceChangePercentage24h;
-  final String imageAddress;
+  final double? price;
+  final double? priceChange24h;
+  final double? priceChangePercentage24h;
+  final String? imageAddress;
 
   Coin(
     this.id,
@@ -43,15 +43,22 @@ class Coin {
   }
 }
 
-Future<Coin> fetchCoinData(String coinName) async {
-  final response = await http.get(
-    Uri.https(coinGeckoSite, '/api/v3/coins/${coinName.toLowerCase()}'),
-  );
+Future<Coin?> fetchCoinData(String coinName) async {
+  try {
+    final response = await http.get(
+      Uri.https(coinGeckoSite, '/api/v3/coins/${coinName.toLowerCase()}'),
+    );
 
-  if (response.statusCode == 200) {
-    //print(response.request);
-    return Coin.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to load data');
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      //print(response.request);
+      return Coin.fromJson(jsonDecode(response.body));
+    } else {
+      print("request was not succesful req: " + response.statusCode.toString());
+      return null;
+    }
+  } on Exception catch (e) {
+    print(e);
   }
 }

@@ -2,14 +2,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DataHandler {
   readPortfolio(Map<String, double> portfolio) async {
-    print(portfolio);
+    //print(portfolio);
     final prefs = await SharedPreferences.getInstance();
     print(prefs.getKeys().length);
     prefs.getKeys().forEach((key) {
       portfolio[key] == null
-          ? portfolio[key] = prefs.get(key)
-          : portfolio.update(key, (value) => prefs.get(key));
-      print('read: $key - ${prefs.get(key)}');
+          ? portfolio[key] = prefs.getDouble(key) ?? 0.0
+          : portfolio.update(key, (value) => prefs.getDouble(key) ?? 0.0);
+      //print('read: $key - ${prefs.get(key)}');
     });
   }
 
@@ -43,6 +43,6 @@ class DataHandler {
     final prefs = await SharedPreferences.getInstance();
     prefs.get(coinName) == null
         ? prefs.setDouble(coinName, amount)
-        : prefs.setDouble(coinName, prefs.getDouble(coinName) + amount);
+        : prefs.setDouble(coinName, prefs.getDouble(coinName) ?? 0.0 + amount);
   }
 }

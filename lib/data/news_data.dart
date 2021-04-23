@@ -1,37 +1,23 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:json_annotation/json_annotation.dart';
 import '../constants.dart';
 import '../classes/news.dart';
 
+part 'news_data.g.dart';
+
+@JsonSerializable()
 class NewsData {
+  @JsonKey(name: "status_updates")
   List<News> data = [];
 
   NewsData();
 
-  factory NewsData.fromJson(Map<String, dynamic> json) {
-    NewsData res = new NewsData();
-    for (int i = 0; i < json['status_updates'].length; i++) {
-      String description = json['status_updates'][i]['description'];
-      DateTime createdAt = json['status_updates'][i]['createdAt'];
-      String user = json['status_updates'][i]['user'];
-      String userTitle = json['status_updates'][i]['userTitle'];
-      String image = json['status_updates'][i]['image'];
-
-      News newNews = new News(description, createdAt, user, userTitle, image);
-
-      RegExp exp = new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
-      Iterable<RegExpMatch> matches = exp.allMatches(description);
-      matches.forEach((match) {
-        newNews.urls.add(description.substring(match.start, match.end));
-      });
-
-      res.data.add(newNews);
-    }
-    return res;
-  }
+  factory NewsData.fromJson(Map<String, dynamic> json) => _$NewsDataFromJson(json);
+  Map<String, dynamic> toJson() => _$NewsDataToJson(this);
 }
 
-Future<NewsData> fetchNewsData() async {
+Future<NewsData?> fetchNewsData() async {
   final response = await http.get(
     Uri.https(coinGeckoSite, '/api/v3/status_updates'),
   );
@@ -40,6 +26,7 @@ Future<NewsData> fetchNewsData() async {
     print(response.request);
     return NewsData.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load data');
+    print("news: status code: " + response.statusCode.toString());
+    return null;
   }
 }

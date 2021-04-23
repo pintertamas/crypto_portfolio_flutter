@@ -7,8 +7,8 @@ class DropDownButton extends StatefulWidget {
   final List<String> dropDownValues;
 
   const DropDownButton({
-    Key key,
-    this.dropDownValues,
+    Key? key,
+    required this.dropDownValues,
   }) : super(key: key);
 
   @override
@@ -17,7 +17,8 @@ class DropDownButton extends StatefulWidget {
 
 class _DropDownButtonState extends State<DropDownButton> {
   List<String> dropDownValues = [];
-  _DropDownButtonState(List<String> dropDownValues){
+
+  _DropDownButtonState(List<String> dropDownValues) {
     this.dropDownValues = dropDownValues;
   }
 
@@ -53,9 +54,9 @@ class _DropDownButtonState extends State<DropDownButton> {
               fontSize: 20,
               fontWeight: FontWeight.w500),
         ),
-        onChanged: (String value) {
+        onChanged: (value) {
           setState(() {
-            selectedCurrency = value;
+            selectedCurrency = value ?? "usd";
           });
         },
       ),

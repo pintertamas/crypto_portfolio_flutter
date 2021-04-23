@@ -11,14 +11,14 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  NewsData newsData = new NewsData();
+  NewsData newsData = NewsData();
 
   bool isWaiting = false;
 
   void getData() async {
     isWaiting = true;
     try {
-      newsData = await fetchNewsData();
+      newsData = await fetchNewsData() ?? newsData;
       if (!mounted) return;
       print("news data loaded");
 

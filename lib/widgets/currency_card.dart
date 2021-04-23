@@ -7,9 +7,9 @@ import 'package:intl/intl.dart';
 
 class CurrencyCard extends StatelessWidget {
   const CurrencyCard({
-    Key key,
-    @required this.balance,
-    @required this.coin,
+    Key? key,
+    required this.balance,
+    required this.coin,
   }) : super(key: key);
 
   final double balance;
@@ -44,7 +44,7 @@ class CurrencyCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      coin == null ? 'Loading...' : '$balance ',
+                      '$balance ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         //fontSize: 20.0,
@@ -52,7 +52,7 @@ class CurrencyCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      coin == null ? '' : '${coin.symbol.toUpperCase()}',
+                      '${coin.symbol.toUpperCase()}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 10.0,
@@ -64,9 +64,7 @@ class CurrencyCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      coin == null
-                          ? ''
-                          : '${NumberFormat("#,##0.00", "en_US").format((coin.price * balance * 10000).toInt().toDouble() / 10000)} ',
+                      '${NumberFormat("#,##0.00", "en_US").format((coin.price! * balance * 10000).toInt().toDouble() / 10000)} ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15.0,
