@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/data/vs_currencies_data.dart';
 import 'package:flutter_homework/widgets/dropdown_button.dart';
-import 'package:flutter_homework/widgets/search_widget.dart';
+import 'package:flutter_homework/screens/search_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme.dart';
 
@@ -97,7 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SearchWidget(),
+                        builder: (context) => SearchScreen(),
                       ),
                     );
                   },
