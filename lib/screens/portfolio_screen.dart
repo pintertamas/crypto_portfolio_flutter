@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/constants.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
+import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:intl/intl.dart';
 import '../calculate_balance.dart';
 import '../classes/coin.dart';
@@ -29,6 +30,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     try {
       final keys = portfolio.keys.toList();
       for (var i = 0; i < keys.length; i++) {
+        //final isolate = await FlutterIsolate.spawn(fetchCoinData, keys[i]);
+        //print(isolate);
         final data = await fetchCoinData(keys[i]);
         if (data != null) coinValues.data[keys[i]] = data;
       }

@@ -48,7 +48,7 @@ class _NewsScreenState extends State<NewsScreen> {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: isWaiting == true || newsData == null
+          child: isWaiting == true
               ? Text(
                   '${EasyLoading.show(status: 'Loading...')}',
                   style: TextStyle(

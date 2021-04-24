@@ -12,9 +12,9 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = new TextEditingController();
   String filter = "";
-  late Future<SupportedCoinData> data;
+  late Future<SupportedCoinData?> data;
 
-  Future<SupportedCoinData> getData() async {
+  Future<SupportedCoinData?> getData() async {
     try {
       final data = await fetchSupportedCoinsData();
       if (!mounted) return data;
@@ -67,7 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           Expanded(
-            child: FutureBuilder<SupportedCoinData>(
+            child: FutureBuilder<SupportedCoinData?>(
               future: data,
               builder: (context, snapshot) {
                 if (snapshot.hasData ||
@@ -109,7 +109,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   );
                 } else
                   return Center(
-                    child: Text("Loading or else"),
+                    child: Text(
+                      '${EasyLoading.show(status: 'Loading...')}',
+                      style: TextStyle(
+                        fontSize: 0,
+                      ),
+                    ),
                   );
               },
             ),
@@ -124,38 +129,3 @@ class _SearchScreenState extends State<SearchScreen> {
         .showSnackBar(SnackBar(content: Text("Tap on " + ' - ' + coin.name)));
   }
 }
-
-/*ListView.builder(
-                        itemCount: data!.data.length,
-                        itemBuilder: (context, index) {
-                          final Coin coin = data!.data[index]!;
-                          // if filter is null or empty returns all data
-                          return filter == ""
-                              ? ListTile(
-                                  title: Text(
-                                    '$coin',
-                                  ),
-                                  subtitle: Text('${coin.symbol}'),
-                                  leading: CircleAvatar(
-                                      backgroundColor: Colors.blue,
-                                      child:
-                                          Text('${coin.symbol.substring(0, 1)}')),
-                                  onTap: () => _onTapItem(context, coin),
-                                )
-                              : '${coin.name}'
-                                      .toLowerCase()
-                                      .contains(filter.toLowerCase())
-                                  ? ListTile(
-                                      title: Text(
-                                        '${coin.name}',
-                                      ),
-                                      subtitle: Text('${coin.symbol}'),
-                                      leading: CircleAvatar(
-                                          backgroundColor: Colors.blue,
-                                          child: Text(
-                                              '${coin.name.substring(0, 1)}')),
-                                      onTap: () => _onTapItem(context, coin),
-                                    )
-                                  : Container();
-                        },
-                      ),*/

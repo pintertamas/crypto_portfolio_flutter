@@ -25,15 +25,18 @@ class SupportedCoinData {
   }
 }
 
-Future<SupportedCoinData> fetchSupportedCoinsData() async {
+Future<SupportedCoinData?> fetchSupportedCoinsData() async { //TODO át kell írni diora
   final response = await http.get(
     Uri.https(coinGeckoSite, '/api/v3/coins/list'),
   );
+
+  print(response.statusCode);
 
   if (response.statusCode == 200) {
     print(response.request);
     return SupportedCoinData.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load data');
+    print("supported: status code: " + response.statusCode.toString());
+    return null;
   }
 }

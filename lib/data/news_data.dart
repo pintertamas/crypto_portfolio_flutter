@@ -23,7 +23,6 @@ Future<NewsData?> fetchNewsData() async {
   );
 
   if (response.statusCode == 200) {
-    print(response.request);
     return NewsData.fromJson(jsonDecode(response.body));
   } else {
     print("news: status code: " + response.statusCode.toString());
