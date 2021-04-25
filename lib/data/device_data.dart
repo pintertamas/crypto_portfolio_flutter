@@ -4,7 +4,6 @@ class DataHandler {
   readPortfolio(Map<String, double> portfolio) async {
     //print(portfolio);
     final prefs = await SharedPreferences.getInstance();
-    print(prefs.getKeys().length);
     prefs.getKeys().forEach((key) {
       portfolio[key] == null
           ? portfolio[key] = prefs.getDouble(key) ?? 0.0

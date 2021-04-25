@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import '../constants.dart';
 import 'package:http/http.dart' as http;
 
+part 'coin.g.dart';
+
+@JsonSerializable()
 class Coin {
   @required
   final String id;
@@ -11,9 +15,13 @@ class Coin {
   final String symbol;
   @required
   final String name;
+  @JsonKey(name: 'current_price')
   final double? price;
+  @JsonKey(name: 'price_change_24h')
   final double? priceChange24h;
+  @JsonKey(name: 'price_change_percentage_24h')
   final double? priceChangePercentage24h;
+  @JsonKey(name: 'image_address')
   final String? imageAddress;
 
   Coin(
@@ -41,6 +49,9 @@ class Coin {
     return new Coin(coinId, coinSymbol, coinName, coinPrice, priceChange24h,
         priceChangePercentage24h, imageAddress);
   }
+
+  /*factory Coin.fromJson(Map<String, dynamic> json) => _$CoinFromJson(json);
+  Map<String, dynamic> toJson() => _$CoinToJson(this);*/
 }
 
 Future<Coin?> fetchCoinData(String coinName) async {
@@ -49,10 +60,7 @@ Future<Coin?> fetchCoinData(String coinName) async {
       Uri.https(coinGeckoSite, '/api/v3/coins/${coinName.toLowerCase()}'),
     );
 
-    print(response.statusCode);
-
     if (response.statusCode == 200) {
-      //print(response.request);
       return Coin.fromJson(jsonDecode(response.body));
     } else {
       print("request was not succesful req: " + response.statusCode.toString());

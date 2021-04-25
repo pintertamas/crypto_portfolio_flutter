@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/constants.dart';
+import 'package:flutter_homework/data/device_data.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
-import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:intl/intl.dart';
 import '../calculate_balance.dart';
 import '../classes/coin.dart';
@@ -47,6 +47,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   void initState() {
     super.initState();
+    DataHandler().readPortfolio(portfolio);
     coinData = getData();
   }
 

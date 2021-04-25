@@ -31,7 +31,6 @@ Future<CoinChartData> fetchCoinChartData(String coinName) async {
   var response = await http.get(uri);
 
   if (response.statusCode == 200) {
-    //print(response.request);
     return CoinChartData.fromJson(jsonDecode(response.body), coinName);
   } else {
     throw Exception('Failed to load data');

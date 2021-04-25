@@ -3,16 +3,24 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/classes/coin.dart';
 import 'package:flutter_homework/data/supported_coins_data.dart';
 import 'package:flutter_homework/theme.dart';
+import 'package:flutter_homework/widgets/list_tile_widget.dart';
 
 class SearchScreen extends StatefulWidget {
+  final Map<String, double> portfolio;
+
+  SearchScreen(this.portfolio);
+
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _SearchScreenState createState() => _SearchScreenState(portfolio);
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController searchController = new TextEditingController();
+  final searchController = new TextEditingController();
   String filter = "";
-  late Future<SupportedCoinData?> data;
+  late Future<SupportedCoinData?> coinData;
+  Map<String, double> portfolio;
+
+  _SearchScreenState(this.portfolio);
 
   Future<SupportedCoinData?> getData() async {
     try {
@@ -20,17 +28,17 @@ class _SearchScreenState extends State<SearchScreen> {
       if (!mounted) return data;
       print("supported coin data loaded");
       EasyLoading.dismiss();
-      return SupportedCoinData();
+      return data;
     } catch (e) {
       print(e);
-      return SupportedCoinData();
+      return null;
     }
   }
 
   @override
   initState() {
     super.initState();
-    data = getData();
+    coinData = getData();
     searchController.addListener(() {
       setState(() {
         filter = searchController.text;
@@ -47,6 +55,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
           title: Text('Add currency',
               style: TextStyle(
@@ -60,60 +69,44 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: searchController,
               decoration: InputDecoration(
                 hintText: 'Search',
+                hintStyle: TextStyle(
+                  color: theme.primaryColor,
+                ),
                 contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
               ),
             ),
           ),
           Expanded(
             child: FutureBuilder<SupportedCoinData?>(
-              future: data,
+              future: coinData,
               builder: (context, snapshot) {
                 if (snapshot.hasData ||
                     snapshot.connectionState == ConnectionState.done) {
-                  final data = snapshot.data!;
+                  final data = snapshot.data!.data;
                   return ListView.builder(
-                    itemCount: data.data.length,
+                    itemCount: filter == "" ? 0 : data.length,
                     itemBuilder: (context, index) {
-                      final Coin coin = data.data[index]!;
-                      // if filter is null or empty returns all data
+                      //print(data.keys.toList()[index]);
+                      Coin coin = data[data.keys.toList()[index]]!;
                       return filter == ""
-                          ? ListTile(
-                              title: Text(
-                                '$coin',
-                              ),
-                              subtitle: Text('${coin.symbol}'),
-                              leading: CircleAvatar(
-                                  backgroundColor: Colors.blue,
-                                  child:
-                                      Text('${coin.symbol.substring(0, 1)}')),
-                              onTap: () => _onTapItem(context, coin),
+                          ? Center(
+                              child: Text(""),
                             )
                           : '${coin.name}'
                                   .toLowerCase()
                                   .contains(filter.toLowerCase())
-                              ? ListTile(
-                                  title: Text(
-                                    '${coin.name}',
-                                  ),
-                                  subtitle: Text('${coin.symbol}'),
-                                  leading: CircleAvatar(
-                                      backgroundColor: Colors.blue,
-                                      child:
-                                          Text('${coin.name.substring(0, 1)}')),
-                                  onTap: () => _onTapItem(context, coin),
-                                )
+                              ? ListTileWidget(coin, portfolio)
                               : Container();
                     },
                   );
                 } else
-                  return Center(
-                    child: Text(
-                      '${EasyLoading.show(status: 'Loading...')}',
-                      style: TextStyle(
-                        fontSize: 0,
-                      ),
+                  return Text(
+                    '${EasyLoading.show(status: 'Loading...')}',
+                    style: TextStyle(
+                      fontSize: 0,
                     ),
                   );
               },
@@ -122,10 +115,5 @@ class _SearchScreenState extends State<SearchScreen> {
         ],
       ),
     );
-  }
-
-  void _onTapItem(BuildContext context, Coin coin) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Tap on " + ' - ' + coin.name)));
   }
 }
