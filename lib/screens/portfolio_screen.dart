@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_homework/constants.dart';
+import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
 import 'package:flutter_homework/data/device_data.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../calculate_balance.dart';
 import '../classes/coin.dart';
 import '../data/coin_data.dart';
@@ -53,6 +54,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BottomNavigationBarProvider>(context);
+
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
@@ -78,7 +81,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               Expanded(
                 flex: 1,
                 child: Text(
-                  '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} ${selectedCurrency.toUpperCase()}',
+                  '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} ${provider.selectedCurrency.toUpperCase()}',
                 ),
               ),
           ],

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'classes/bottom_navigation_bar_provider.dart';
 import 'theme.dart';
-import 'widgets/bottom_navigation_bar_provider.dart';
+import 'widgets/bottom_navigation_bar.dart';
 import 'data/device_data.dart';
 
 void main() => runApp(MyApp());

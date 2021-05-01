@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
+import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/data/device_data.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import '../data/coin_chart_data.dart';
 import 'package:flutter_homework/theme.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-import '../classes/coin.dart';
 
 class AddCoinScreen extends StatefulWidget {
   const AddCoinScreen({required this.coin, required this.portfolio});
 
-  final Coin coin;
+  final CoinListElement coin;
   final Map<String, double> portfolio;
 
   @override
@@ -19,7 +21,7 @@ class AddCoinScreen extends StatefulWidget {
 }
 
 class _AddCoinScreenState extends State<AddCoinScreen> {
-  final Coin coin;
+  final CoinListElement coin;
   final Map<String, double> portfolio;
   double amount = 0.0;
 
@@ -32,6 +34,8 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BottomNavigationBarProvider>(context);
+
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
@@ -69,7 +73,7 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: FutureBuilder<CoinChartData?>(
-                        future: fetchCoinChartData(coin.name), // async work
+                        future: fetchCoinChartData(coin.name, provider.selectedCurrency), // async work
                         builder: (BuildContext context,
                             AsyncSnapshot<CoinChartData?> snapshot) {
                           switch (snapshot.connectionState) {

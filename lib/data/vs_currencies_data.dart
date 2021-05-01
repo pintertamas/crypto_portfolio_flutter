@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../constants.dart';
 
 Future<List<String>> fetchVsCurrenciesData() async {
+  var coinGeckoSite = 'api.coingecko.com';
+
   final response = await http.get(
     Uri.https(coinGeckoSite, '/api/v3/simple/supported_vs_currencies'),
   );

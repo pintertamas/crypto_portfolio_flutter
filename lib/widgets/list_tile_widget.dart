@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/classes/coin.dart';
+import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/screens/add_coin_screen.dart';
 import 'package:flutter_homework/theme.dart';
 
 class ListTileWidget extends StatelessWidget {
-  final Coin coin;
+  final CoinListElement coin;
   final Map<String, double> portfolio;
 
   @override
@@ -39,7 +39,7 @@ class ListTileWidget extends StatelessWidget {
 }
 
 void _onTapItem(
-    BuildContext context, Coin coin, Map<String, double> portfolio) {
+    BuildContext context, CoinListElement coin, Map<String, double> portfolio) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: GestureDetector(
     child: Text(

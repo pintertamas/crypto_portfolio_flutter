@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../constants.dart';
+import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
+import 'package:provider/provider.dart';
 import '../theme.dart';
 
 class DropDownButton extends StatefulWidget {
@@ -26,6 +27,8 @@ class _DropDownButtonState extends State<DropDownButton> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BottomNavigationBarProvider>(context);
+
     return Container(
       color: theme.primaryColor,
       child: Container(
@@ -39,7 +42,7 @@ class _DropDownButtonState extends State<DropDownButton> {
           underline: SizedBox(),
           elevation: 10,
           focusColor: theme.primaryColor,
-          value: selectedCurrency.toLowerCase(),
+          value: provider.selectedCurrency.toLowerCase(),
           iconEnabledColor: theme.primaryColor,
           items: dropDownValues.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
@@ -66,7 +69,7 @@ class _DropDownButtonState extends State<DropDownButton> {
           ),
           onChanged: (value) {
             setState(() {
-              selectedCurrency = value ?? "usd";
+              provider.selectedCurrency = value ?? "usd";
             });
           },
         ),

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../constants.dart';
 
 class CoinChartData {
   Map<int, double> data = new Map();
@@ -20,7 +19,9 @@ class CoinChartData {
   }
 }
 
-Future<CoinChartData> fetchCoinChartData(String coinName) async {
+Future<CoinChartData> fetchCoinChartData(String coinName, String selectedCurrency) async {
+  var coinGeckoSite = 'api.coingecko.com';
+
   Map<String, String> queryParameters = {
     'vs_currency': selectedCurrency,
     'days': '7',

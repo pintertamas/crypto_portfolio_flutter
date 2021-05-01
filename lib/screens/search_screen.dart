@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_homework/classes/coin.dart';
+import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/data/supported_coins_data.dart';
 import 'package:flutter_homework/theme.dart';
 import 'package:flutter_homework/widgets/list_tile_widget.dart';
@@ -90,7 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     itemCount: filter == "" ? 0 : data.length,
                     itemBuilder: (context, index) {
                       //print(data.keys.toList()[index]);
-                      Coin coin = data[data.keys.toList()[index]]!;
+                      CoinListElement coin = data[data.keys.toList()[index]]!;
                       return filter == ""
                           ? Center(
                               child: Text(""),

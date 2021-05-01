@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/constants.dart';
+import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
 import 'package:flutter_homework/screens/coin_screen.dart';
+import 'package:provider/provider.dart';
 import '../classes/coin.dart';
 import '../theme.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,8 @@ class CurrencyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BottomNavigationBarProvider>(context);
+
     return Padding(
       padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 10),
       child: GestureDetector(
@@ -64,7 +67,7 @@ class CurrencyCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${NumberFormat("#,##0.00", "en_US").format((coin.price! * balance * 10000).toInt().toDouble() / 10000)} ',
+                      '${NumberFormat("#,##0.00", "en_US").format((coin.coinMarketData.price! * balance * 10000).toInt().toDouble() / 10000)} ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15.0,
@@ -72,7 +75,7 @@ class CurrencyCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${selectedCurrency.toUpperCase()}',
+                      '${provider.selectedCurrency.toUpperCase()}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 10.0,

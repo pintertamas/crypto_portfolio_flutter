@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_homework/constants.dart';
+import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import '../data/coin_chart_data.dart';
 import 'package:flutter_homework/theme.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -25,9 +26,9 @@ class _CoinScreenState extends State<CoinScreen> {
 
   CoinChartData coinValues = new CoinChartData();
 
-  void getData() async {
+  void getData(String selectedCurrency) async {
     try {
-      coinValues = await fetchCoinChartData(coin.id);
+      coinValues = await fetchCoinChartData(coin.id, selectedCurrency);
       print("coin chart data loaded");
       setState(() {});
     } catch (e) {
@@ -38,11 +39,17 @@ class _CoinScreenState extends State<CoinScreen> {
   @override
   void initState() {
     super.initState();
-    getData();
+    //TODO
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      var coinData = Provider.of<BottomNavigationBarProvider>(context, listen: false);
+      getData(coinData.selectedCurrency);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BottomNavigationBarProvider>(context);
+
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
@@ -113,22 +120,29 @@ class _CoinScreenState extends State<CoinScreen> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          coin.price.toString() + " " + selectedCurrency.toUpperCase() + " ",
+                                          coin.coinMarketData.price.toString() +
+                                              " " +
+                                              provider.selectedCurrency
+                                                  .toUpperCase() +
+                                              " ",
                                           style: detailsTextStyle(18),
                                         ),
                                         Icon(
-                                          coin.priceChangePercentage24h! >= 0
+                                          coin.coinMarketData
+                                                      .priceChangePercentage24h! >=
+                                                  0
                                               ? FontAwesomeIcons.sortUp
                                               : FontAwesomeIcons.sortDown,
-                                          color:
-                                              coin.priceChangePercentage24h! >=
-                                                      0
-                                                  ? Colors.green
-                                                  : Colors.red,
+                                          color: coin.coinMarketData
+                                                      .priceChangePercentage24h! >=
+                                                  0
+                                              ? Colors.green
+                                              : Colors.red,
                                           size: 15,
                                         ),
                                         Text(
-                                          coin.priceChangePercentage24h
+                                          coin.coinMarketData
+                                                  .priceChangePercentage24h
                                                   .toString()
                                                   .substring(0, 5) +
                                               "%",
@@ -157,7 +171,7 @@ class _CoinScreenState extends State<CoinScreen> {
                               shrinkWrap: true,
                               children: [
                                 Text(
-                                  coin.price.toString(),
+                                  coin.coinMarketData.price.toString(),
                                   style: detailsTextStyle(20),
                                 ),
                               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
 import 'package:flutter_homework/screens/news_screen.dart';
 import 'package:flutter_homework/screens/portfolio_screen.dart';
 import 'package:flutter_homework/screens/settings_screen.dart';
@@ -64,16 +65,5 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ],
       ),
     );
-  }
-}
-
-class BottomNavigationBarProvider with ChangeNotifier {
-  int _currentIndex = 0;
-
-  int get currentIndex => _currentIndex;
-
-  set currentIndex(int index) {
-    _currentIndex = index;
-    notifyListeners();
   }
 }
