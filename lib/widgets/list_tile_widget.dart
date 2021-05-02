@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_homework/classes/coin.dart';
 import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/screens/add_coin_screen.dart';
 import 'package:flutter_homework/theme.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_homework/theme.dart';
 class ListTileWidget extends StatelessWidget {
   final CoinListElement coin;
   final Map<String, double> portfolio;
+
+  ListTileWidget(this.coin, this.portfolio);
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +37,6 @@ class ListTileWidget extends StatelessWidget {
       onTap: () => _onTapItem(context, coin, portfolio),
     );
   }
-
-  ListTileWidget(this.coin, this.portfolio);
 }
 
 void _onTapItem(

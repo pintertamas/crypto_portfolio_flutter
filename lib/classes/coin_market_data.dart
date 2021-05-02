@@ -5,11 +5,11 @@ part 'coin_market_data.g.dart';
 @JsonSerializable()
 class CoinMarketData {
   @JsonKey(name: 'current_price')
-  final double? price;
-  @JsonKey(name: 'price_change_24h')
-  final double? priceChange24h;
-  @JsonKey(name: 'price_change_percentage_24h')
-  final double? priceChangePercentage24h;
+  final Map<String, dynamic>? price;
+  @JsonKey(name: 'price_change_24h_in_currency')
+  final Map<String, dynamic>? priceChange24h;
+  @JsonKey(name: 'price_change_percentage_24h_in_currency')
+  final Map<String, dynamic>? priceChangePercentage24h;
 
   CoinMarketData(
     this.price,

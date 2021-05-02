@@ -67,7 +67,7 @@ class CurrencyCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${NumberFormat("#,##0.00", "en_US").format((coin.coinMarketData.price! * balance * 10000).toInt().toDouble() / 10000)} ',
+                      '${NumberFormat("#,##0.00", "en_US").format((coin.coinMarketData.price![provider.selectedCurrency] * balance * 10000).toInt().toDouble() / 10000)} ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15.0,

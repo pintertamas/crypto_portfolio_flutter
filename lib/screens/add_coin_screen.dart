@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
+import 'package:flutter_homework/classes/coin.dart';
 import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/data/device_data.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -49,7 +50,9 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
         ),
         onPressed: () {
           print(portfolio[coin.name.toLowerCase()]);
-          DataHandler().addToPortfolio(coin.name.toLowerCase(), amount);
+
+          //portfolio[coin.name.toLowerCase()] += amount;
+
           DataHandler().savePortfolio(portfolio);
           DataHandler().readPortfolio(portfolio);
           print(portfolio[coin.name.toLowerCase()]);
@@ -121,7 +124,10 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
                       } catch (e) {
                         doubleValue = 0;
                       }
-                      amount = doubleValue;
+                      setState(() {
+                        amount = doubleValue;
+                        print(amount);
+                      });
                     },
                   ),
                 ],

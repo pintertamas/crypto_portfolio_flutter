@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_homework/classes/coin.dart';
 import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/data/supported_coins_data.dart';
 import 'package:flutter_homework/theme.dart';
@@ -31,6 +32,8 @@ class _SearchScreenState extends State<SearchScreen> {
       return data;
     } catch (e) {
       print(e);
+      print("exception");
+      EasyLoading.dismiss();
       return null;
     }
   }

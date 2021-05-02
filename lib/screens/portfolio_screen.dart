@@ -81,7 +81,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               Expanded(
                 flex: 1,
                 child: Text(
-                  '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio))} ${provider.selectedCurrency.toUpperCase()}',
+                  '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio, provider.selectedCurrency))} ${provider.selectedCurrency.toUpperCase()}',
                 ),
               ),
           ],

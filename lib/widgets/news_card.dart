@@ -23,7 +23,9 @@ class NewsCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              '${news.user}',
+              news.user == null || news.user == 'null'
+                  ? 'Unknown user'
+                  : '${news.user}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20.0,
@@ -70,5 +72,6 @@ String? passedTime(DateTime createdAt) {
     return "$hours hours ago";
   } else if (minutes > 0) {
     return "$minutes minutes ago";
-  } else return "$seconds seconds ago";
+  } else
+    return "$seconds seconds ago";
 }

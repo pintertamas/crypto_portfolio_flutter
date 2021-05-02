@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DataHandler {
   readPortfolio(Map<String, double> portfolio) async {
     //print(portfolio);
+
     final prefs = await SharedPreferences.getInstance();
     prefs.getKeys().forEach((key) {
       portfolio[key] == null
@@ -13,6 +14,10 @@ class DataHandler {
   }
 
   savePortfolio(Map<String, double> portfolio) async {
+    Map<String, double> portfolio = {
+      'bitcoin': 6.05,
+      'ethereum': 3.4,
+    };
     /*Map<String, double> portfolio = {
       'bitcoin': 6.05,
       'ethereum': 3.4,

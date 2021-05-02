@@ -20,19 +20,7 @@ class NewsData {
 }
 
 Future<NewsData?> fetchNewsData() async {
-  var coinGeckoSite = 'http://api.coingecko.com';
-
-  /*final response = await http.get(
-    Uri.https(coinGeckoSite, '/api/v3/status_updates'),
-  );
-
-  if (response.statusCode == 200) {
-    return NewsData.fromJson(jsonDecode(response.body));
-  } else {
-    print("news: status code: " + response.statusCode.toString());
-    return null;
-  }*/
-
+  var coinGeckoSite = 'https://api.coingecko.com';
   var options = BaseOptions(
     baseUrl: coinGeckoSite,
     connectTimeout: 5000,
@@ -40,16 +28,15 @@ Future<NewsData?> fetchNewsData() async {
   );
   Dio dio = Dio(options);
 
-  var response = await dio.request(
-    '/api/v3/status_updates',
-    options: Options(method: 'GET'),
-  );
-  print(response.data);
-
-  final statusCode = response.statusCode;
-
-  if (statusCode != 200) {
-    print("status code:$statusCode");
+  try {
+    var response = await dio.get('/api/v3/status_updates');
+    final statusCode = response.statusCode;
+    if (statusCode != 200) {
+      print("status code:$statusCode");
+    }
+    return NewsData.fromJson(response.data);
+  } on Exception catch (e) {
+    print("news data exception" + e.toString());
+    return null;
   }
-  return NewsData.fromJson(jsonDecode(response.data));
 }

@@ -41,7 +41,8 @@ class _CoinScreenState extends State<CoinScreen> {
     super.initState();
     //TODO
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      var coinData = Provider.of<BottomNavigationBarProvider>(context, listen: false);
+      var coinData =
+          Provider.of<BottomNavigationBarProvider>(context, listen: false);
       getData(coinData.selectedCurrency);
     });
   }
@@ -129,12 +130,16 @@ class _CoinScreenState extends State<CoinScreen> {
                                         ),
                                         Icon(
                                           coin.coinMarketData
-                                                      .priceChangePercentage24h! >=
+                                                          .priceChangePercentage24h![
+                                                      provider
+                                                          .selectedCurrency] >=
                                                   0
                                               ? FontAwesomeIcons.sortUp
                                               : FontAwesomeIcons.sortDown,
                                           color: coin.coinMarketData
-                                                      .priceChangePercentage24h! >=
+                                                          .priceChangePercentage24h![
+                                                      provider
+                                                          .selectedCurrency]! >=
                                                   0
                                               ? Colors.green
                                               : Colors.red,
@@ -158,7 +163,8 @@ class _CoinScreenState extends State<CoinScreen> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: Image.network(
-                                    coin.imageAddress.toString(),
+                                      'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png'
+                                    //coin.imageAddress!['small'] == null ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png' : '${coin.imageAddress!['small']}',
                                   ),
                                 ),
                               ),
