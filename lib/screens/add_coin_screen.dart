@@ -66,14 +66,6 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
         ),
         onPressed: () {
           _addToPortfolio(amount);
-          /*if (portfolio[coin.id.toLowerCase()] == null) {
-            portfolio[coin.id.toLowerCase()] = 0;
-          }
-          portfolio[coin.id.toLowerCase()] =
-              portfolio[coin.id.toLowerCase()]! + amount;
-          setState(() {
-            DataHandler().savePortfolio(portfolio);
-          });*/
         },
       ),
       body: Column(
