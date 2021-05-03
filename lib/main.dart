@@ -9,29 +9,7 @@ import 'data/device_data.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  /*static const Map<String, double> portfolio = {
-    'bitcoin': 6.05,
-    'ethereum': 3.4,
-    'litecoin': 20,
-    'switcheo': 350000,
-    'ripple': 300,
-    'monero': 2.05,
-    'tether': 1002,
-    'binancecoin': 43,
-    'cardano': 30,
-    'tezos': 1002,
-    'solana': 654,
-    'cosmos': 32,
-    'renbtc': 40,
-    'stellar': 5321,
-    'dogecoin': 200,
-  };*/
-  Map<String, double> portfolio = new Map();
-
-  getData() async {
-    //await DataHandler().savePortfolio(portfolio);
-    await DataHandler().readPortfolio(portfolio);
-  }
+  final Map<String, double> portfolio = new Map();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +23,7 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => BottomNavigationBarProvider(),
           );
         },
-        future: getData(),
+        future: DataHandler().loadPortfolio(portfolio),
       ),
       builder: EasyLoading.init(),
     );

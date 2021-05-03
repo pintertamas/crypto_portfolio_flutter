@@ -27,7 +27,7 @@ class Coin {
   Map<String, dynamic> toJson() => _$CoinToJson(this);
 }
 
-Future<Coin?> fetchCoinData(String coinName) async {
+Future<Coin?> fetchCoinData(String coinId) async {
   var coinGeckoSite = 'https://api.coingecko.com';
   var options = BaseOptions(
     baseUrl: coinGeckoSite,
@@ -37,7 +37,7 @@ Future<Coin?> fetchCoinData(String coinName) async {
   Dio dio = Dio(options);
 
   try {
-    var response = await dio.get('/api/v3/coins/${coinName.toLowerCase()}');
+    var response = await dio.get('/api/v3/coins/${coinId.toLowerCase()}');
     final statusCode = response.statusCode;
     if (statusCode != 200) {
       print("status code:$statusCode");
@@ -45,7 +45,7 @@ Future<Coin?> fetchCoinData(String coinName) async {
     print(response.realUri);
     return Coin.fromJson(response.data);
   } on Exception catch (e) {
-    print("coin data exception" + e.toString());
+    print("coin data exception " + coinId + " " + e.toString());
     return null;
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/data/device_data.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/coin_chart_data.dart';
 import 'package:flutter_homework/theme.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -31,16 +32,31 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
   @override
   void initState() {
     super.initState();
+    DataHandler().loadPortfolio(portfolio);
+  }
+
+  _addToPortfolio(double amount) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+
+      portfolio[coin.id.toLowerCase()] = (prefs.getDouble(coin.id.toLowerCase()) ?? 0) + amount;
+      prefs.setDouble(coin.id.toLowerCase(), portfolio[coin.id.toLowerCase()]!);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<BottomNavigationBarProvider>(context);
-
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
-        title: Text('${coin.name}'),
+        title: Text(
+          '${coin.name}',
+          style: TextStyle(
+            color: theme.secondaryHeaderColor,
+          ),
+        ),
+        backgroundColor: theme.primaryColor,
+        foregroundColor: theme.secondaryHeaderColor,
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: theme.accentColor,
@@ -49,13 +65,15 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
           color: theme.primaryColor,
         ),
         onPressed: () {
-          print(portfolio[coin.name.toLowerCase()]);
-
-          //portfolio[coin.name.toLowerCase()] += amount;
-
-          DataHandler().savePortfolio(portfolio);
-          DataHandler().readPortfolio(portfolio);
-          print(portfolio[coin.name.toLowerCase()]);
+          _addToPortfolio(amount);
+          /*if (portfolio[coin.id.toLowerCase()] == null) {
+            portfolio[coin.id.toLowerCase()] = 0;
+          }
+          portfolio[coin.id.toLowerCase()] =
+              portfolio[coin.id.toLowerCase()]! + amount;
+          setState(() {
+            DataHandler().savePortfolio(portfolio);
+          });*/
         },
       ),
       body: Column(
@@ -67,47 +85,6 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  Card(
-                    color: theme.primaryColor,
-                    elevation: 5.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: FutureBuilder<CoinChartData?>(
-                        future: fetchCoinChartData(coin.name, provider.selectedCurrency), // async work
-                        builder: (BuildContext context,
-                            AsyncSnapshot<CoinChartData?> snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return Text(
-                                '${EasyLoading.show(status: 'Loading...')}',
-                                style: TextStyle(
-                                  fontSize: 0,
-                                ),
-                              );
-                            default:
-                              if (snapshot.hasError)
-                                return Text('Error: ${snapshot.error}');
-                              else {
-                                EasyLoading.dismiss();
-                                return SfSparkAreaChart(
-                                  color: theme.primaryColor,
-                                  borderColor: theme.accentColor,
-                                  axisLineDashArray:
-                                      snapshot.data!.data.values.toList(),
-                                  borderWidth: 3,
-                                  axisLineWidth: 0,
-                                  labelStyle: TextStyle(fontSize: 18),
-                                  data: snapshot.data!.prices,
-                                );
-                              }
-                          }
-                        },
-                      ),
-                    ),
-                  ),
                   TextField(
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -124,10 +101,8 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
                       } catch (e) {
                         doubleValue = 0;
                       }
-                      setState(() {
-                        amount = doubleValue;
-                        print(amount);
-                      });
+                      amount = doubleValue;
+                      print(amount);
                     },
                   ),
                 ],

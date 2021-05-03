@@ -36,6 +36,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         final data = await fetchCoinData(keys[i]);
         if (data != null) coinValues.data[keys[i]] = data;
       }
+      setState(() {});
       print("coin data loaded");
       EasyLoading.dismiss();
       return coinValues.data;
@@ -48,7 +49,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   void initState() {
     super.initState();
-    DataHandler().readPortfolio(portfolio);
+    DataHandler().loadPortfolio(portfolio);
     coinData = getData();
   }
 
@@ -63,25 +64,25 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-                flex: 1,
-                child: Text(
-                  'Portfolio balance',
-                )),
+              flex: 1,
+              child: Text(
+                'Portfolio balance',
+              ),
+            ),
             if (coinValues.data.isEmpty)
-              Expanded(
-                flex: 1,
+              FittedBox(
                 child: Text(
-                  '${EasyLoading.show(status: 'Loading...')}',
-                  style: TextStyle(
-                    fontSize: 0,
-                  ),
+                  "Loading...",
                 ),
               )
             else
               Expanded(
                 flex: 1,
-                child: Text(
-                  '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio, provider.selectedCurrency))} ${provider.selectedCurrency.toUpperCase()}',
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    '${NumberFormat("#,##0.00", "en_US").format(calculateBalance(coinValues, portfolio, provider.selectedCurrency))} ${provider.selectedCurrency.toUpperCase()}',
+                  ),
                 ),
               ),
           ],
@@ -114,7 +115,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                             Expanded(
                               flex: 1,
                               child: LogoWidget(
-                                image: data[coinName]!.imageAddress['small'] == null ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png' : '${data[coinName]!.imageAddress['small']}',
+                                image: data[coinName]!.imageAddress['small'] ==
+                                        null
+                                    ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png'
+                                    : '${data[coinName]!.imageAddress['small']}',
                               ),
                             ),
                             Expanded(
@@ -130,7 +134,12 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                     );
                   } else
                     return Center(
-                      child: Text("Loading or else"),
+                      child: Text(
+                        '${EasyLoading.show(status: 'Loading...')}',
+                        style: TextStyle(
+                          fontSize: 0,
+                        ),
+                      ),
                     );
                 },
               ),

@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataHandler {
-  readPortfolio(Map<String, double> portfolio) async {
+  loadPortfolio(Map<String, double> portfolio) async {
     //print(portfolio);
 
     final prefs = await SharedPreferences.getInstance();

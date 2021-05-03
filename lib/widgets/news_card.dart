@@ -29,14 +29,14 @@ class NewsCard extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20.0,
-                color: theme.secondaryHeaderColor,
+                color: theme.accentColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  padding: const EdgeInsets.fromLTRB(5, 20, 5, 20),
                   child: Text(
                     '${news.description}',
                     textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class NewsCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: theme.secondaryHeaderColor,
+                    color: theme.accentColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
