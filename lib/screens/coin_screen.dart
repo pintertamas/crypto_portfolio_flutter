@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
+import 'package:flutter_homework/widgets/logo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../data/coin_chart_data.dart';
@@ -121,7 +122,7 @@ class _CoinScreenState extends State<CoinScreen> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          coin.coinMarketData.price.toString() +
+                                          coin.coinMarketData.price![provider.selectedCurrency].toString() +
                                               " " +
                                               provider.selectedCurrency
                                                   .toUpperCase() +
@@ -163,8 +164,7 @@ class _CoinScreenState extends State<CoinScreen> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: Image.network(
-                                      'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png'
-                                    //coin.imageAddress!['small'] == null ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png' : '${coin.imageAddress!['small']}',
+                                    coin.imageAddress['small'],
                                   ),
                                 ),
                               ),
@@ -177,7 +177,7 @@ class _CoinScreenState extends State<CoinScreen> {
                               shrinkWrap: true,
                               children: [
                                 Text(
-                                  coin.coinMarketData.price.toString(),
+                                  coin.coinMarketData.price![provider.selectedCurrency].toString(),
                                   style: detailsTextStyle(20),
                                 ),
                               ],

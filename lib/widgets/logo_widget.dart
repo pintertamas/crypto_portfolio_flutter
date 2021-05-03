@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../classes/coin.dart';
 
 class LogoWidget extends StatelessWidget {
   const LogoWidget({
@@ -19,7 +18,6 @@ class LogoWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(100.0),
         ),
         child: Image.network(
-          //'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png'
           image,
         ),
       ),
