@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
-import 'package:flutter_homework/widgets/logo_widget.dart';
+import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../data/coin_chart_data.dart';
@@ -51,6 +51,7 @@ class _CoinScreenState extends State<CoinScreen> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
+    final formatter = new NumberFormat("#,##0.00", "en_US");
 
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
@@ -122,7 +123,11 @@ class _CoinScreenState extends State<CoinScreen> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          coin.coinMarketData.price![provider.selectedCurrency].toString() +
+                                          coin
+                                                  .coinMarketData
+                                                  .price![
+                                                      provider.selectedCurrency]
+                                                  .toString() +
                                               " " +
                                               provider.selectedCurrency
                                                   .toUpperCase() +
@@ -147,8 +152,10 @@ class _CoinScreenState extends State<CoinScreen> {
                                           size: 15,
                                         ),
                                         Text(
-                                          coin.coinMarketData
-                                                  .priceChangePercentage24h
+                                          coin
+                                                  .coinMarketData
+                                                  .priceChangePercentage24h![
+                                                      provider.selectedCurrency]
                                                   .toString()
                                                   .substring(0, 5) +
                                               "%",
@@ -177,8 +184,89 @@ class _CoinScreenState extends State<CoinScreen> {
                               shrinkWrap: true,
                               children: [
                                 Text(
-                                  coin.coinMarketData.price![provider.selectedCurrency].toString(),
-                                  style: detailsTextStyle(20),
+                                  "Today's high: " +
+                                      formatter
+                                          .format(coin.coinMarketData.high24h![
+                                              provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
+                                ),
+                                Text(
+                                  "Today's low: " +
+                                      formatter
+                                          .format(coin.coinMarketData.low24h![
+                                              provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
+                                ),
+                                Text(
+                                  "Volume: " +
+                                      formatter
+                                          .format(coin.coinMarketData.volume![
+                                              provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
+                                ),
+                                Text(
+                                  "ATL: " +
+                                      formatter
+                                          .format(
+                                              coin.coinMarketData.allTimeLow![
+                                                  provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
+                                ),
+                                Text(
+                                  "ATH: " +
+                                      formatter
+                                          .format(
+                                              coin.coinMarketData.allTimeHigh![
+                                                  provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
+                                ),
+                                Text(
+                                  "ATL: " +
+                                      formatter
+                                          .format(
+                                              coin.coinMarketData.allTimeLow![
+                                                  provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
+                                ),
+                                Text(
+                                  "Market Cap: " +
+                                      formatter
+                                          .format(
+                                              coin.coinMarketData.marketCap![
+                                                  provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
+                                ),
+                                Text(
+                                  "ATL: " +
+                                      formatter
+                                          .format(
+                                              coin.coinMarketData.allTimeLow![
+                                                  provider.selectedCurrency])
+                                          .toString() +
+                                      " " +
+                                      provider.selectedCurrency.toUpperCase(),
+                                  style: detailsTextStyle(15),
                                 ),
                               ],
                             ),
