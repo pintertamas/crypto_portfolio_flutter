@@ -40,7 +40,6 @@ class _CoinScreenState extends State<CoinScreen> {
   @override
   void initState() {
     super.initState();
-    //TODO
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       var coinData =
           Provider.of<BottomNavigationBarProvider>(context, listen: false);
@@ -51,12 +50,22 @@ class _CoinScreenState extends State<CoinScreen> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
-    final formatter = new NumberFormat("#,##0.00", "en_US");
+    var formatter = new NumberFormat("#,##0.00", "en_US");;
+    if (coin.coinMarketData.price![provider.selectedCurrency] < 0) {
+      formatter = new NumberFormat("#,##0.000000", "en_US");
+    }
 
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
-        title: Text('${coin.name}'),
+        title: Text(
+          '${coin.name}',
+          style: TextStyle(
+            color: theme.secondaryHeaderColor,
+          ),
+        ),
+        backgroundColor: theme.primaryColor,
+        foregroundColor: theme.secondaryHeaderColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
