@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
 import 'package:flutter_homework/classes/coin.dart';
 import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/screens/add_coin_screen.dart';
 import 'package:flutter_homework/theme.dart';
+import 'package:provider/provider.dart';
 
 class ListTileWidget extends StatelessWidget {
   final CoinListElement coin;
@@ -50,15 +52,33 @@ void _onTapItem(
       ),
     ),
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => AddCoinScreen(
-            coin: coin,
-            portfolio: portfolio,
-          ),
-        ),
-      );
+      navigateToNewPage(ChangeScreen(coin, portfolio), context);
     },
   )));
+}
+
+Future<void> navigateToNewPage(Widget page, BuildContext context) async {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => page),
+  );
+}
+
+class ChangeScreen extends StatelessWidget {
+  final CoinListElement coin;
+  final portfolio;
+  ChangeScreen(this.coin, this.portfolio);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<BottomNavigationBarProvider>(
+      create: (context) => BottomNavigationBarProvider(),
+      child: MaterialApp(
+        home: AddCoinScreen(
+          coin: coin,
+          portfolio: portfolio,
+        ),
+      ),
+    );
+  }
 }

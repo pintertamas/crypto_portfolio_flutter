@@ -24,14 +24,7 @@ class CurrencyCard extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CoinScreen(
-                coin: coin,
-              ),
-            ),
-          );
+          navigateToNewPage(ChangeScreen(coin), context);
         },
         child: Card(
           color: theme.primaryColor,
@@ -87,6 +80,30 @@ class CurrencyCard extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+Future<void> navigateToNewPage(Widget page, BuildContext context) async {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => page),
+  );
+}
+
+class ChangeScreen extends StatelessWidget {
+  final Coin coin;
+  ChangeScreen(this.coin);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<BottomNavigationBarProvider>(
+      create: (context) => BottomNavigationBarProvider(),
+      child: MaterialApp(
+        home: CoinScreen(
+          coin: coin,
         ),
       ),
     );

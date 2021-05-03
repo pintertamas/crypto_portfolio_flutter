@@ -16,16 +16,11 @@ class Coin {
   @required
   @JsonKey(name: 'market_data')
   final CoinMarketData coinMarketData;
-  //@JsonKey(name: 'image_address')
-  //final Map<String, dynamic>? imageAddress;
+  @JsonKey(name: 'image')
+  final Map<String, dynamic> imageAddress;
 
-  Coin(
-    this.id,
-    this.symbol,
-    this.name,
-    this.coinMarketData,
-    //this.imageAddress,
-  );
+  Coin(this.id, this.symbol, this.name, this.coinMarketData,
+      this.imageAddress);
 
   factory Coin.fromJson(Map<String, dynamic> json) => _$CoinFromJson(json);
 

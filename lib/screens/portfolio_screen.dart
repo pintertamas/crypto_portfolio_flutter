@@ -114,7 +114,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                             Expanded(
                               flex: 1,
                               child: LogoWidget(
-                                coin: data[coinName]!,
+                                image: data[coinName]!.imageAddress['small'] == null ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png' : '${data[coinName]!.imageAddress['small']}',
                               ),
                             ),
                             Expanded(

@@ -9,7 +9,6 @@ import 'data/device_data.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   /*static const Map<String, double> portfolio = {
     'bitcoin': 6.05,
     'ethereum': 3.4,
@@ -27,22 +26,26 @@ class MyApp extends StatelessWidget {
     'stellar': 5321,
     'dogecoin': 200,
   };*/
+  Map<String, double> portfolio = new Map();
+
+  getData() async {
+    //await DataHandler().savePortfolio(portfolio);
+    await DataHandler().readPortfolio(portfolio);
+  }
 
   @override
   Widget build(BuildContext context) {
-    Map<String, double> portfolio = new Map();
-
     return MaterialApp(
       title: 'Portfolio',
       theme: theme,
       home: FutureBuilder(
-        builder: (ctx, snapshot) {
+        builder: (context, snapshot) {
           return ChangeNotifierProvider<BottomNavigationBarProvider>(
             child: BottomNavBar(portfolio: portfolio),
             create: (BuildContext context) => BottomNavigationBarProvider(),
           );
         },
-        future: new DataHandler().readPortfolio(portfolio),
+        future: getData(),
       ),
       builder: EasyLoading.init(),
     );
