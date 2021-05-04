@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_homework/classes/coin_list_element.dart';
+import 'package:flutter_homework/classes/functions.dart';
 import 'package:flutter_homework/data/device_data.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_homework/theme.dart';
 
@@ -32,8 +33,19 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
   _addToPortfolio(double amount) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
+      portfolio[coin.id.toLowerCase()] =
+          (prefs.getDouble(coin.id.toLowerCase()) ?? 0) + amount;
+      prefs.setDouble(coin.id.toLowerCase(), portfolio[coin.id.toLowerCase()]!);
+    });
+  }
 
-      portfolio[coin.id.toLowerCase()] = (prefs.getDouble(coin.id.toLowerCase()) ?? 0) + amount;
+  _removeFromPortfolio(double amount) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      portfolio[coin.id.toLowerCase()]! >= amount
+          ? portfolio[coin.id.toLowerCase()] =
+              (prefs.getDouble(coin.id.toLowerCase()) ?? 0) - amount
+          : portfolio[coin.id.toLowerCase()] = 0;
       prefs.setDouble(coin.id.toLowerCase(), portfolio[coin.id.toLowerCase()]!);
     });
   }
@@ -52,50 +64,211 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
         backgroundColor: theme.primaryColor,
         foregroundColor: theme.secondaryHeaderColor,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: theme.accentColor,
-        child: Icon(
-          FontAwesomeIcons.plus,
-          color: theme.primaryColor,
-        ),
-        onPressed: () {
-          _addToPortfolio(amount);
-        },
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          Card(
+            color: theme.accentColor,
+            elevation: 5.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                        hintText: 'Enter amount!',
-                        hintStyle: TextStyle(
-                          color: theme.primaryColor,
-                        )),
-                    onChanged: (value) {
-                      double doubleValue;
-                      try {
-                        doubleValue = double.parse(value);
-                      } catch (e) {
-                        doubleValue = 0;
-                      }
-                      amount = doubleValue;
-                      print(amount);
-                    },
+                  FittedBox(
+                    child: Text(
+                      "Balance:",
+                      style: TextStyle(
+                        color: theme.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  FittedBox(
+                    child: Text(
+                      portfolio[coin.id] == null
+                          ? '0 ' + coin.name.toUpperCase()
+                          : format(portfolio[coin.id]!).toString() +
+                              " " +
+                              coin.name.toUpperCase(),
+                      style: TextStyle(
+                        color: theme.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
+          Expanded(
+            flex: 1,
+            child: Container(),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: TextField(
+                  decoration: InputDecoration(
+                      fillColor: theme.accentColor,
+                      focusColor: theme.accentColor,
+                      hoverColor: theme.accentColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: theme.accentColor,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                      hintText: 'Enter amount!',
+                      hintStyle: TextStyle(
+                        color: theme.primaryColor,
+                      )),
+                  onChanged: (value) {
+                    double doubleValue;
+                    try {
+                      doubleValue = double.parse(value);
+                    } catch (e) {
+                      doubleValue = 0;
+                    }
+                    amount = doubleValue.abs();
+                    print(amount);
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TxButton(
+                    text: "Buy",
+                    onTap: () {
+                      showAnimatedDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return ClassicGeneralDialogWidget(
+                            titleText: 'Buy ' + coin.name,
+                            contentText: 'Are you sure you want to add ' +
+                                amount.toString() +
+                                ' ' +
+                                coin.name +
+                                ' to your portfolio?',
+                            negativeTextStyle: TextStyle(
+                              color: theme.primaryColor,
+                              fontSize: 15,
+                            ),
+                            positiveTextStyle: TextStyle(
+                              color: theme.accentColor,
+                              fontSize: 20,
+                            ),
+                            onPositiveClick: () {
+                              _addToPortfolio(amount);
+                              print(amount);
+                              Navigator.of(context).pop();
+                            },
+                            onNegativeClick: () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                        animationType: DialogTransitionType.size,
+                        curve: Curves.fastOutSlowIn,
+                        duration: Duration(seconds: 1),
+                      );
+                    },
+                  ),
+                  TxButton(
+                    text: "Sell",
+                    onTap: () {
+                      showAnimatedDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return ClassicGeneralDialogWidget(
+                            titleText: 'Sell ' + coin.name,
+                            contentText: 'Are you sure you want to remove ' +
+                                amount.toString() +
+                                ' ' +
+                                coin.name +
+                                ' from your portfolio?',
+                            negativeTextStyle: TextStyle(
+                              color: theme.primaryColor,
+                              fontSize: 15,
+                            ),
+                            positiveTextStyle: TextStyle(
+                              color: theme.accentColor,
+                              fontSize: 20,
+                            ),
+                            onPositiveClick: () {
+                              _removeFromPortfolio(amount);
+                              Navigator.of(context).pop();
+                            },
+                            onNegativeClick: () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                        animationType: DialogTransitionType.size,
+                        curve: Curves.fastOutSlowIn,
+                        duration: Duration(seconds: 1),
+                      );
+                    },
+                  )
+                ],
+              ),
+            ],
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(),
+          )
         ],
+      ),
+    );
+  }
+}
+
+class TxButton extends StatelessWidget {
+  final String text;
+
+  final void Function() onTap; //your function expects a context
+
+  const TxButton({required this.text, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: FittedBox(
+        child: Card(
+          color: theme.accentColor,
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          child: GestureDetector(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 5, 20.0, 5),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: theme.primaryColor,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

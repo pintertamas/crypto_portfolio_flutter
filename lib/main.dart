@@ -9,7 +9,7 @@ import 'data/device_data.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final Map<String, double> portfolio = new Map();
+  final Map<String, double> portfolio = Map();
 
   @override
   Widget build(BuildContext context) {

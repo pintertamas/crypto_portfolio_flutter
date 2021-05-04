@@ -3,12 +3,12 @@ import '../classes/coin.dart';
 class CoinData {
   final Map<String, double> portfolio;
 
-  Map<String, Coin> data = new Map();
+  Map<String, Coin> data = Map();
 
   CoinData(this.portfolio);
 
   factory CoinData.getCoinData(Map<String, double> portfolio) {
-    CoinData res = new CoinData(portfolio);
+    CoinData res = CoinData(portfolio);
     portfolio.keys.forEach((element) async {
       final coin = await fetchCoinData(element);
       if (coin != null)

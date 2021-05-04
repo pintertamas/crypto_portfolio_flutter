@@ -19,7 +19,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  Map<String, double> portfolio = new Map();
+  Map<String, double> portfolio = Map();
 
   var currentTab = [];
 
@@ -51,11 +51,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(FontAwesomeIcons.newspaper),
+            icon: Icon(FontAwesomeIcons.newspaper),
             label: 'News',
           ),
           BottomNavigationBarItem(
-            icon: new Icon(FontAwesomeIcons.chartLine),
+            icon: Icon(FontAwesomeIcons.chartLine),
             label: 'Portfolio',
           ),
           BottomNavigationBarItem(

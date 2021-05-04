@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class CoinChartData {
-  Map<int, double> data = new Map();
+  Map<int, double> data = Map();
   List<double> prices = [];
   String name = '';
 
   CoinChartData();
 
   factory CoinChartData.fromJson(Map<String, dynamic> json, String name) {
-    CoinChartData res = new CoinChartData();
+    CoinChartData res = CoinChartData();
     res.name = name;
     for (int i = 0; i < json.values.elementAt(0).length; i++) {
       res.data[json.values.elementAt(0)[i][0]] = json.values.elementAt(0)[i][1];

@@ -15,7 +15,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final searchController = new TextEditingController();
+  final searchController = TextEditingController();
   String filter = "";
   late Future<SupportedCoinData?> coinData;
   Map<String, double> portfolio;
@@ -65,7 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   fontWeight: FontWeight.bold))),
       body: Column(
         children: <Widget>[
-          new Padding(
+          Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(
               controller: searchController,
