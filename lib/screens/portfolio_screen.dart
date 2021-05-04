@@ -46,6 +46,15 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     }
   }
 
+  bool _checkPortfolio() {
+    bool result = true;
+    portfolio.forEach((key, value) {
+      if (portfolio[key] != 0 && portfolio[key] != null) result = false;
+      return;
+    });
+    return result;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -95,54 +104,69 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-              child: FutureBuilder<Map<String, Coin>>(
-                future: coinData,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData ||
-                      snapshot.connectionState == ConnectionState.done) {
-                    final data = snapshot.data!;
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(10),
-                      itemCount: data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        String coinName = data.keys.elementAt(index);
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: LogoWidget(
-                                image: data[coinName]!.imageAddress['small'] ==
-                                        null
-                                    ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png'
-                                    : '${data[coinName]!.imageAddress['small']}',
-                              ),
-                            ),
-                            Expanded(
-                              flex: 8,
-                              child: CurrencyCard(
-                                balance: portfolio[coinName]!,
-                                coin: data[coinName]!,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  } else
-                    return Center(
-                      child: Text(
-                        '${EasyLoading.show(status: 'Loading...')}',
-                        style: TextStyle(
-                          fontSize: 0,
+              child: _checkPortfolio()
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: FittedBox(
+                        child: Text(
+                          "Your portfolio is empty.\nTry adding new tokens on the settings screen.",
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    );
-                },
-              ),
+                    )
+                  : FutureBuilder<Map<String, Coin>>(
+                      future: coinData,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData ||
+                            snapshot.connectionState == ConnectionState.done) {
+                          final data = snapshot.data!;
+                          return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(10),
+                            itemCount: data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              String coinName = data.keys.elementAt(index);
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: LogoWidget(
+                                      image: data[coinName]!
+                                                  .imageAddress['small'] ==
+                                              null
+                                          ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png'
+                                          : '${data[coinName]!.imageAddress['small']}',
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 8,
+                                    child: CurrencyCard(
+                                      balance: portfolio[coinName]!,
+                                      coin: data[coinName]!,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else
+                          return Center(
+                            child: Text(
+                              '${EasyLoading.show(status: 'Loading...')}',
+                              style: TextStyle(
+                                fontSize: 0,
+                              ),
+                            ),
+                          );
+                      },
+                    ),
             ),
           ),
         ],
