@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
 import 'package:flutter_homework/classes/functions.dart';
+import 'package:flutter_homework/widgets/coin_data_element_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../data/coin_chart_data.dart';
@@ -134,7 +135,7 @@ class _CoinScreenState extends State<CoinScreen> {
                                             Text(
                                               format(coin.coinMarketData.price![
                                                           provider
-                                                              .selectedCurrency])
+                                                              .selectedCurrency].toString())
                                                       .toString() +
                                                   " " +
                                                   provider.selectedCurrency
@@ -202,7 +203,7 @@ class _CoinScreenState extends State<CoinScreen> {
                                         coin.coinMarketData.high24h, 15),
                                     CoinDataElement("24h low: ",
                                         coin.coinMarketData.low24h, 15),
-                                    CoinDataElement("All time low (ATH): ",
+                                    CoinDataElement("All time high (ATH): ",
                                         coin.coinMarketData.allTimeHigh, 15),
                                     CoinDataElement("All time low (ATL): ",
                                         coin.coinMarketData.allTimeLow, 15)
@@ -223,50 +224,4 @@ class _CoinScreenState extends State<CoinScreen> {
       ),
     );
   }
-}
-
-class CoinDataElement extends StatelessWidget {
-  final String text;
-  final value;
-  final size;
-
-  @override
-  Widget build(BuildContext context) {
-    var provider = Provider.of<BottomNavigationBarProvider>(context);
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              text,
-              style: detailsTextStyle(size),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              format(value![provider.selectedCurrency]) +
-                  " " +
-                  provider.selectedCurrency.toUpperCase(),
-              style: detailsTextStyle(size),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  CoinDataElement(this.text, this.value, this.size);
-}
-
-TextStyle detailsTextStyle(int size) {
-  return TextStyle(
-    color: theme.secondaryHeaderColor,
-    fontWeight: FontWeight.bold,
-    fontSize: double.parse(size.toString()),
-  );
 }

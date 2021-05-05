@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_homework/classes/functions.dart';
 import '../classes/news.dart';
 import '../theme.dart';
 
@@ -62,16 +63,4 @@ class NewsCard extends StatelessWidget {
       ),
     );
   }
-}
-
-String? passedTime(DateTime createdAt) {
-  int seconds = DateTime.now().difference(createdAt).inSeconds;
-  int minutes = seconds ~/ 60;
-  int hours = minutes ~/ 60;
-  if (hours > 1) {
-    return "$hours hours ago";
-  } else if (minutes > 0) {
-    return "$minutes minutes ago";
-  } else
-    return "$seconds seconds ago";
 }

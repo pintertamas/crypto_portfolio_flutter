@@ -36,7 +36,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: theme.secondaryHeaderColor,
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(
+          "Settings",
+        ),
+        backgroundColor: theme.primaryColor,
+        foregroundColor: theme.secondaryHeaderColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,7 +161,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         barrierDismissible: true,
                         builder: (BuildContext context) {
                           return ClassicGeneralDialogWidget(
-                            titleText: 'Are you sure you want to delete your portfolio?',
+                            titleText:
+                                'Are you sure you want to delete your portfolio?',
                             negativeTextStyle: TextStyle(
                               color: theme.primaryColor,
                               fontSize: 15,

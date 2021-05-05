@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
+import 'package:flutter_homework/classes/functions.dart';
 import 'package:flutter_homework/data/device_data.dart';
 import 'package:flutter_homework/widgets/logo_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../calculate_balance.dart';
 import '../classes/coin.dart';
 import '../data/coin_data.dart';
 import '../theme.dart';
@@ -80,7 +80,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             ),
             if (coinValues.data.isEmpty)
               FittedBox(
-                child: Text(
+                child: _checkPortfolio() ? Text('0 ' + provider.selectedCurrency.toUpperCase()) : Text(
                   "Loading...",
                 ),
               )

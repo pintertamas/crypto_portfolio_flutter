@@ -1,0 +1,4 @@
+a newsnál az idő kijelzésénél legyen nap is
+format függvény szar ahogy van
+delete portfolio dialogja ne szürke legyen
+lehessen egy coint is törölni a portfoliorol (currency card mellett legyen egy törlés)

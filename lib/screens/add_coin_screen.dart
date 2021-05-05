@@ -4,6 +4,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_homework/classes/coin_list_element.dart';
 import 'package:flutter_homework/classes/functions.dart';
 import 'package:flutter_homework/data/device_data.dart';
+import 'package:flutter_homework/widgets/trasaction_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_homework/theme.dart';
 
@@ -96,7 +97,7 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
                     child: Text(
                       portfolio[coin.id] == null
                           ? '0 ' + coin.name.toUpperCase()
-                          : format(portfolio[coin.id]!).toString() +
+                          : format(portfolio[coin.id]!.toString()).toString() +
                               " " +
                               coin.name.toUpperCase(),
                       style: TextStyle(
@@ -155,6 +156,7 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
                       showAnimatedDialog(
                         context: context,
                         barrierDismissible: true,
+                        barrierColor: theme.secondaryHeaderColor,
                         builder: (BuildContext context) {
                           return ClassicGeneralDialogWidget(
                             titleText: 'Buy ' + coin.name,
@@ -233,42 +235,6 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
             child: Container(),
           )
         ],
-      ),
-    );
-  }
-}
-
-class TxButton extends StatelessWidget {
-  final String text;
-
-  final void Function() onTap; //your function expects a context
-
-  const TxButton({required this.text, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: FittedBox(
-        child: Card(
-          color: theme.accentColor,
-          elevation: 5.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-          child: GestureDetector(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 5, 20.0, 5),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: theme.primaryColor,
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
