@@ -7,12 +7,14 @@ extension StringExtension on String {
   }
 }
 
-double calculateBalance(CoinData coinValues, Map<String, double> portfolio, String selectedCurrency) {
+double calculateBalance(CoinData coinValues, Map<String, double> portfolio,
+    String selectedCurrency) {
   double balance = 0;
   coinValues.data.forEach((key, value) {
     balance += coinValues.data[key] == null
         ? 0
-        : coinValues.data[key]!.coinMarketData.price![selectedCurrency] * portfolio[key]!;
+        : coinValues.data[key]!.coinMarketData!.price![selectedCurrency] *
+            portfolio[key]!;
   });
   return (balance * 10000).toInt().toDouble() / 10000;
 }
@@ -32,21 +34,16 @@ String? passedTime(DateTime createdAt) {
     return "$seconds seconds ago";
 }
 
-// hopefully nobody sees this function
-String format(String? strValue) {
-  if (strValue == null) return "unknown";
-  double value = double.parse(strValue);
-  print(value);
-  var formatter;
-  if (value - value.floorToDouble() == 0)
-    formatter = NumberFormat("#,##0", "en_US");
-  else if (value < 1 && value > 0.1)
-    formatter = NumberFormat("#,##0.00", "en_US");
-  else if (value < 0.1 && value > 0.0001)
-    formatter = NumberFormat("#,##0.0000", "en_US");
-  else if (value < 0.0001 && value > 0.000001)
-    formatter = NumberFormat("#,##0.000000", "en_US");
-  else if (double.parse(value.toString()) < 0.000001)
-    formatter = NumberFormat("#,##0.00000000", "en_US");
-  return formatter.format(value).toString();
+String format(var value) {
+  if (value == null)
+    return "unknown";
+  RegExp regex = RegExp(r'0*$');
+  String formattedNumber = value.toString().replaceAll(regex, "");
+  var formatter = NumberFormat("#,##0.000000", "en_US");
+  formattedNumber = formatter.format(double.parse(formattedNumber));
+  formattedNumber = formattedNumber.replaceAll(regex, "");
+  if (formattedNumber.endsWith('.')) {
+    formattedNumber = formattedNumber.substring(0, formattedNumber.length - 1);
+  }
+  return formattedNumber;
 }

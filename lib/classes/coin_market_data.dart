@@ -35,6 +35,20 @@ class CoinMarketData {
     this.low24h,
   );
 
+  bool checkIfAnyIsNull() {
+    return [
+      price,
+      priceChange24h,
+      priceChangePercentage24h,
+      marketCap,
+      allTimeHigh,
+      allTimeLow,
+      volume,
+      high24h,
+      low24h
+    ].contains(null);
+  }
+
   factory CoinMarketData.fromJson(Map<String, dynamic> json) =>
       _$CoinMarketDataFromJson(json);
 

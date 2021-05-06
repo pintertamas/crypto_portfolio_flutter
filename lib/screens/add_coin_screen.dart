@@ -97,7 +97,7 @@ class _AddCoinScreenState extends State<AddCoinScreen> {
                     child: Text(
                       portfolio[coin.id] == null
                           ? '0 ' + coin.name.toUpperCase()
-                          : format(portfolio[coin.id]!.toString()).toString() +
+                          : format(portfolio[coin.id]!) +
                               " " +
                               coin.name.toUpperCase(),
                       style: TextStyle(

@@ -13,14 +13,30 @@ class Coin {
   final String symbol;
   @required
   final String name;
+
+  @required
+  final Map<String, dynamic> description;
+  @required
+  @JsonKey(name: 'sentiment_votes_up_percentage')
+  final double? upVotePercentage;
+  @required
+  @JsonKey(name: 'sentiment_votes_down_percentage')
+  final double? downVotePercentage;
   @required
   @JsonKey(name: 'market_data')
-  final CoinMarketData coinMarketData;
+  final CoinMarketData? coinMarketData;
   @JsonKey(name: 'image')
-  final Map<String, dynamic> imageAddress;
+  final Map<String, dynamic>? imageAddress;
 
-  Coin(this.id, this.symbol, this.name, this.coinMarketData,
-      this.imageAddress);
+  Coin(
+      this.id,
+      this.symbol,
+      this.name,
+      this.coinMarketData,
+      this.imageAddress,
+      this.description,
+      this.upVotePercentage,
+      this.downVotePercentage);
 
   factory Coin.fromJson(Map<String, dynamic> json) => _$CoinFromJson(json);
 

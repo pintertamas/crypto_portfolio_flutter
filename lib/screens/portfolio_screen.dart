@@ -80,9 +80,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             ),
             if (coinValues.data.isEmpty)
               FittedBox(
-                child: _checkPortfolio() ? Text('0 ' + provider.selectedCurrency.toUpperCase()) : Text(
-                  "Loading...",
-                ),
+                child: _checkPortfolio()
+                    ? Text('0 ' + provider.selectedCurrency.toUpperCase())
+                    : Text(
+                        "Loading...",
+                      ),
               )
             else
               Expanded(
@@ -139,10 +141,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                                     flex: 1,
                                     child: LogoWidget(
                                       image: data[coinName]!
-                                                  .imageAddress['small'] ==
+                                                  .imageAddress!['small'] ==
                                               null
                                           ? 'https://www.clipartmax.com/png/small/215-2151466_bitcoin-cash-bch-icon-bitcoin-cash-logo-svg.png'
-                                          : '${data[coinName]!.imageAddress['small']}',
+                                          : '${data[coinName]!.imageAddress!['small']}',
                                     ),
                                   ),
                                   Expanded(

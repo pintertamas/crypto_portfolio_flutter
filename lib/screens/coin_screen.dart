@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
 import 'package:flutter_homework/classes/functions.dart';
 import 'package:flutter_homework/widgets/coin_data_element_widget.dart';
+import 'package:flutter_homework/widgets/html_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../data/coin_chart_data.dart';
@@ -133,9 +134,10 @@ class _CoinScreenState extends State<CoinScreen> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              format(coin.coinMarketData.price![
+                                              format(coin.coinMarketData!
+                                                              .price![
                                                           provider
-                                                              .selectedCurrency].toString())
+                                                              .selectedCurrency])
                                                       .toString() +
                                                   " " +
                                                   provider.selectedCurrency
@@ -144,31 +146,27 @@ class _CoinScreenState extends State<CoinScreen> {
                                               style: detailsTextStyle(20),
                                             ),
                                             Icon(
-                                              coin.coinMarketData
+                                              (coin.coinMarketData!
                                                               .priceChangePercentage24h![
                                                           provider
-                                                              .selectedCurrency] >=
-                                                      0
+                                                              .selectedCurrency] ?? 0) >= 0
                                                   ? FontAwesomeIcons.sortUp
                                                   : FontAwesomeIcons.sortDown,
-                                              color: coin.coinMarketData
+                                              color: (coin.coinMarketData!
                                                               .priceChangePercentage24h![
                                                           provider
-                                                              .selectedCurrency]! >=
-                                                      0
+                                                              .selectedCurrency] ??
+                                                      0) >= 0
                                                   ? Colors.green
                                                   : Colors.red,
                                               size: 15,
                                             ),
                                             Text(
-                                              coin
-                                                      .coinMarketData
-                                                      .priceChangePercentage24h![
-                                                          provider
-                                                              .selectedCurrency]
-                                                      .toString()
-                                                      .substring(0, 5) +
-                                                  "%",
+                                              (coin.coinMarketData!
+                                                          .priceChangePercentage24h![
+                                                      provider
+                                                          .selectedCurrency] ??
+                                                  0).toString() + "%",
                                               style: detailsTextStyle(20),
                                             ),
                                           ],
@@ -181,7 +179,7 @@ class _CoinScreenState extends State<CoinScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10.0),
                                       child: Image.network(
-                                        coin.imageAddress['small'],
+                                        coin.imageAddress!['small'],
                                       ),
                                     ),
                                   ),
@@ -190,23 +188,59 @@ class _CoinScreenState extends State<CoinScreen> {
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                                child: ListView(
-                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
+                                child: Column(
                                   children: [
-                                    CoinDataElement("Market Cap: ",
-                                        coin.coinMarketData.marketCap, 15),
-                                    CoinDataElement("Volume: ",
-                                        coin.coinMarketData.volume, 15),
-                                    CoinDataElement("24h high: ",
-                                        coin.coinMarketData.high24h, 15),
-                                    CoinDataElement("24h low: ",
-                                        coin.coinMarketData.low24h, 15),
-                                    CoinDataElement("All time high (ATH): ",
-                                        coin.coinMarketData.allTimeHigh, 15),
-                                    CoinDataElement("All time low (ATL): ",
-                                        coin.coinMarketData.allTimeLow, 15)
+                                    CoinMarketDataElement("Market Cap: ",
+                                        coin.coinMarketData!.marketCap, 15),
+                                    CoinMarketDataElement("Volume: ",
+                                        coin.coinMarketData!.volume, 15),
+                                    CoinMarketDataElement("24h high: ",
+                                        coin.coinMarketData!.high24h, 15),
+                                    CoinMarketDataElement("24h low: ",
+                                        coin.coinMarketData!.low24h, 15),
+                                    CoinMarketDataElement(
+                                        "All time high (ATH): ",
+                                        coin.coinMarketData!.allTimeHigh,
+                                        15),
+                                    CoinMarketDataElement(
+                                        "All time low (ATL): ",
+                                        coin.coinMarketData!.allTimeLow,
+                                        15),
+                                    if (coin.upVotePercentage != null &&
+                                        coin.downVotePercentage != null)
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Market sentiment votes:",
+                                          style: detailsTextStyle(15),
+                                        ),
+                                      ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          flex: (100 *
+                                                  (coin.upVotePercentage ?? 0))
+                                              .toInt(),
+                                          child: Container(
+                                            color: Colors.green,
+                                            height: 10,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: (100 *
+                                                  (coin.downVotePercentage ??
+                                                      0))
+                                              .toInt(),
+                                          child: Container(
+                                            color: Colors.red,
+                                            height: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    HTMLWidget(
+                                      coin.description["en"],
+                                    ),
                                   ],
                                 ),
                               )

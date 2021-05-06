@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../theme.dart';
 
-class CoinDataElement extends StatelessWidget {
+class CoinMarketDataElement extends StatelessWidget {
   final String text;
   final Map<String, dynamic>? value;
   final int size;
@@ -29,7 +29,7 @@ class CoinDataElement extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Text(
-              format(value![provider.selectedCurrency].toString()) +
+              format(value![provider.selectedCurrency]) +
                   " " +
                   provider.selectedCurrency.toUpperCase(),
               style: detailsTextStyle(size),
@@ -40,5 +40,5 @@ class CoinDataElement extends StatelessWidget {
     );
   }
 
-  CoinDataElement(this.text, this.value, this.size);
+  CoinMarketDataElement(this.text, this.value, this.size);
 }

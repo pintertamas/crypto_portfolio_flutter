@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/classes/bottom_navigation_bar_provider.dart';
+import 'package:flutter_homework/classes/functions.dart';
 import 'package:flutter_homework/screens/coin_screen.dart';
 import 'package:provider/provider.dart';
 import '../classes/coin.dart';
@@ -40,7 +41,7 @@ class CurrencyCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '$balance ',
+                      '${format(balance)} ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         //fontSize: 20.0,
@@ -60,7 +61,7 @@ class CurrencyCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${NumberFormat("#,##0.00", "en_US").format((coin.coinMarketData.price![provider.selectedCurrency] * balance * 10000).toInt().toDouble() / 10000)} ',
+                      '${NumberFormat("#,##0.00", "en_US").format((coin.coinMarketData!.price![provider.selectedCurrency] * balance * 10000).toInt().toDouble() / 10000)} ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15.0,
@@ -95,6 +96,7 @@ Future<void> navigateToNewPage(Widget page, BuildContext context) async {
 
 class ChangeScreen extends StatelessWidget {
   final Coin coin;
+
   ChangeScreen(this.coin);
 
   @override
